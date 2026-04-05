@@ -126,6 +126,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(result);
   } catch (err) {
     console.error("Analysis error:", err);
+    const message = err instanceof Error ? err.message : String(err);
     if (err instanceof SyntaxError) {
       return NextResponse.json(
         { error: "Failed to parse analysis response. Please try again." },
@@ -133,7 +134,7 @@ export async function POST(req: NextRequest) {
       );
     }
     return NextResponse.json(
-      { error: "Something went wrong. Please try again." },
+      { error: message },
       { status: 500 }
     );
   }
