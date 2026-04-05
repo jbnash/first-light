@@ -85,11 +85,19 @@ Add the recommendations array to the JSON shape like this:
   }
 ]`;
 
-const client = new Anthropic();
+const apiKey = process.env.ANTHROPIC_API_KEY;
+const client = new Anthropic({ apiKey });
 
 export async function POST(req: NextRequest) {
   try {
     const { text } = await req.json();
+
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: "Server configuration error: API key not set. Contact the site owner." },
+        { status: 500 }
+      );
+    }
 
     if (!text || typeof text !== "string" || text.trim().length < 20) {
       return NextResponse.json(
