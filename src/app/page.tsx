@@ -129,7 +129,7 @@ export default function Home() {
         </button>
 
         {showDimensions && (
-          <div className="mt-4 w-full max-w-2xl px-6">
+          <div className="mt-4 w-full max-w-2xl px-6 text-left">
             <div className="rounded-2xl border border-neutral-200 dark:border-white/8 bg-white dark:bg-white/[0.03] divide-y divide-neutral-100 dark:divide-white/5 shadow-sm">
               {DIMENSIONS_INFO.map((d, i) => (
                 <div key={i} className="px-5 py-4">
