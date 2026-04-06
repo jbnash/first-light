@@ -1,4 +1,4 @@
-import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextRequest, NextResponse } from "next/server";
 
 export interface DimensionResult {
@@ -85,8 +85,7 @@ Add the recommendations array to the JSON shape like this:
   }
 ]`;
 
-const apiKey = process.env.ANTHROPIC_API_KEY;
-const client = new Anthropic({ apiKey });
+const apiKey = process.env.GOOGLE_AI_API_KEY;
 
 export async function POST(req: NextRequest) {
   try {
@@ -106,41 +105,33 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const message = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 2048,
-      system: SYSTEM_PROMPT,
-      messages: [
-        {
-          role: "user",
-          content: `Please analyze the following assignment or syllabus text:\n\n---\n${text.trim()}\n---`,
-        },
-      ],
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.0-flash",
+      systemInstruction: SYSTEM_PROMPT,
+      generationConfig: {
+        responseMimeType: "application/json",
+        maxOutputTokens: 2048,
+      },
     });
 
-    const rawContent = message.content[0];
-    if (rawContent.type !== "text") {
-      throw new Error("Unexpected response type from API");
-    }
+    const response = await model.generateContent(
+      `Please analyze the following assignment or syllabus text:\n\n---\n${text.trim()}\n---`
+    );
 
-    // Strip markdown code fences if present
-    let jsonText = rawContent.text.trim();
-    if (jsonText.startsWith("```")) {
-      jsonText = jsonText.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
-    }
-
+    const jsonText = response.response.text().trim();
     const result: AnalysisResult = JSON.parse(jsonText);
 
     return NextResponse.json(result);
   } catch (err) {
     console.error("Analysis error:", err);
-    const message = err instanceof Error ? err.message : String(err);
     if (err instanceof SyntaxError) {
       return NextResponse.json(
         { error: "Failed to parse analysis response. Please try again." },
         { status: 500 }
       );
     }
+    const message = err instanceof Error ? err.message : String(err);
     return NextResponse.json(
       { error: message },
       { status: 500 }
