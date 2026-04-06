@@ -171,7 +171,7 @@ export default function ResultsPage() {
         </div>
 
         <p className="text-center text-xs text-neutral-400 dark:text-white/15 mt-8">
-          First Light · Powered by Claude · For educational use
+          First Light · Powered by Claude · For educational use · © 2026 John Nash
         </p>
       </div>
     </main>
