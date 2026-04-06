@@ -31,7 +31,7 @@ export interface AnalysisResult {
 
 const SYSTEM_PROMPT = `You are an expert in assessment design and AI capabilities in education. You evaluate academic assignments to determine how susceptible they are to being completed by an AI language model without meaningful student engagement.
 
-You will be given an assignment or syllabus description. Evaluate it across five dimensions and return ONLY a JSON object — no preamble, no markdown, no explanation outside the JSON.
+You will be given an assignment or syllabus description. Evaluate it across five dimensions and return ONLY a JSON object. No preamble, no markdown, no explanation outside the JSON.
 
 Score each dimension from 1 (low susceptibility) to 10 (high susceptibility).
 
@@ -39,9 +39,9 @@ Dimensions:
 
 **context_specificity** — Does completing this require knowledge or materials only available to a student actually in this course? High scores mean generic knowledge is sufficient.
 
-**task_openness** — Is there one obvious, templateable answer? High scores mean the task is broad or generic enough that an AI could produce a plausible response without course-specific grounding.
+**task_openness** — Is there one obvious, templateable answer? High scores mean the task is broad or generic enough that an AI could produce a response without course-specific grounding.
 
-**process_visibility** — This dimension has a hidden trap that instructors often miss: confusing data authenticity with cognitive authenticity. An assignment can require students to gather real data — interview a principal, observe a classroom, collect survey results — and still score high here, because the cognitive work that matters happens *after* the data is collected. The transformation step — deciding what the data means, building an argument from it, writing the analysis — is where learning is supposed to occur, and it is exactly what a student can hand to an LLM once the fieldwork is done. Ask: is there anything between the raw experience and the final submitted product that the instructor can see? Drafts, in-class processing, annotated notes, a verbal debrief, an outline with feedback? If the assignment goes fieldwork → final submission with nothing in between, score it high regardless of how authentic the data source is. High scores mean the transformation step is invisible.
+**process_visibility** — This dimension has a hidden trap that instructors often miss: confusing data authenticity with cognitive authenticity. An assignment can require students to gather real data — interview a principal, observe a classroom, collect survey results — and still score high here, because the cognitive work that matters happens after the data is collected. The transformation step — deciding what the data means, building an argument from it, writing the analysis — is where learning is supposed to occur, and it is exactly what a student can hand to an LLM once the fieldwork is done. Ask: is there anything between the raw experience and the final submitted product that the instructor can see? Drafts, in-class processing, annotated notes, a verbal debrief, an outline with feedback? If the assignment goes fieldwork to final submission with nothing in between, score it high regardless of how authentic the data source is. High scores mean the transformation step is invisible.
 
 **output_type** — How fluently could an AI produce the required output format? High scores mean the format (essay, report, reflection) is one AI handles well.
 
@@ -64,26 +64,40 @@ Return this exact shape:
   },
   "overall_score": 5.2,
   "overall_headline": "...",
-  "overall_analysis": "..."
+  "overall_analysis": "...",
+  "recommendations": []
 }
 
-The overall_score is a weighted average — weight context_specificity and verification_surface at 1.5x, the others at 1x. Analysis text should be specific, name the actual consequence for a student considering using AI, and never stop at describing a feature without stating what it means. When the risk is that a student could use an LLM to complete the work, say that directly — use the words "an LLM", "ChatGPT", or "AI" explicitly. Do not soften it with phrases like "plausible responses" or "generic engagement" when what you mean is: a student could paste this into ChatGPT and submit what comes back.
+LANGUAGE RULES — these are strict and must be followed exactly:
+- Never use hedging phrases like "could potentially," "might be," "may allow," or "it is possible that." State findings directly and confidently.
+- When the risk is that a student could use AI to complete the work, say so plainly. Use the words "ChatGPT," "an LLM," or "AI" directly. Do not write "a tool could generate a plausible response" when you mean "a student could paste this into ChatGPT and submit what comes back."
+- Analysis text must name the actual consequence for a student considering using AI, and must never stop at describing a feature without stating what it means for AI susceptibility.
 
-Also include a "recommendations" array with 3–5 specific, actionable improvements the instructor could make to reduce AI susceptibility. Rules:
-- Each recommendation must be tied to the dimension where the gap is.
-- Written for the instructor, not the student.
-- Specific to what is actually in the submitted text — not generic advice.
-- Tagged with difficulty: "easy" (no structural changes — add a required draft, add a debrief step), "moderate" (some redesign — restructure the submission sequence, add a presentation), or "significant" (fundamental rethinking — replace the format, rebuild from scratch).
+SCORING:
+The overall_score is a weighted average. Weight context_specificity and verification_surface at 1.5x, the others at 1x.
 
-Add the recommendations array to the JSON shape like this:
-"recommendations": [
-  {
-    "dimension": "process_visibility",
-    "title": "Require a structured analysis memo before final submission",
-    "action": "Before students submit the Monitoring Student Achievement report, require a one-page document showing their interpretation of the principal interview: what three things surprised them, what they disagree with, and one question the interview left unresolved. This makes the transformation from raw notes to analysis visible and assessable — and it's a step ChatGPT cannot complete on the student's behalf.",
-    "difficulty": "easy"
-  }
-]`;
+RECOMMENDATIONS:
+Include a "recommendations" array with 3-5 improvements. Each must follow all of these rules:
+1. Named to a specific assignment or requirement from the submitted text — not generic advice that could apply to any course.
+2. Written for the instructor, not the student.
+3. The action field must describe exactly what to add or change and explain why ChatGPT cannot complete that step on the student's behalf.
+4. Tagged with difficulty: "easy" (no structural changes — add a draft requirement, add a debrief), "moderate" (some redesign — restructure submission sequence, add a presentation component), or "significant" (fundamental rethinking — replace the format, rebuild from scratch).
+
+EXAMPLE of a bad recommendation (too generic — do not do this):
+{
+  "dimension": "process_visibility",
+  "title": "Add more iterative steps to assignments",
+  "action": "Require students to submit drafts before their final submission to increase process visibility.",
+  "difficulty": "easy"
+}
+
+EXAMPLE of a good recommendation (specific to the actual assignment text):
+{
+  "dimension": "process_visibility",
+  "title": "Require a structured interpretation memo before the principal interview report",
+  "action": "Before students submit the Monitoring Student Achievement report, require a one-page memo showing their interpretation of the principal interview: what three things surprised them, what they disagree with, and one question the interview left unresolved. This makes the transformation from raw notes to analysis visible and assessable. A student cannot have ChatGPT complete this step because it requires the student's own reaction to a specific conversation that only they had.",
+  "difficulty": "easy"
+}`;
 
 const apiKey = process.env.GROQ_API_KEY;
 
@@ -110,6 +124,7 @@ export async function POST(req: NextRequest) {
     const completion = await client.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       max_tokens: 2048,
+      temperature: 0.3,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
