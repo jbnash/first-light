@@ -1,4 +1,4 @@
-import Groq from "groq-sdk";
+import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
 
 export interface DimensionResult {
@@ -110,7 +110,8 @@ EXAMPLE of a good recommendation (specific to the actual assignment text):
   "difficulty": "easy"
 }`;
 
-const apiKey = process.env.GROQ_API_KEY;
+const apiKey = process.env.ANTHROPIC_API_KEY;
+const client = new Anthropic({ apiKey });
 
 export async function POST(req: NextRequest) {
   try {
@@ -130,15 +131,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const client = new Groq({ apiKey });
-
-    const completion = await client.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
-      max_tokens: 2048,
-      temperature: 0.3,
-      response_format: { type: "json_object" },
+    const message = await client.messages.create({
+      model: "claude-haiku-4-5",
+      max_tokens: 4096,
+      system: SYSTEM_PROMPT,
       messages: [
-        { role: "system", content: SYSTEM_PROMPT },
         {
           role: "user",
           content: `Please analyze the following assignment or syllabus text:\n\n---\n${text.trim()}\n---`,
@@ -146,7 +143,16 @@ export async function POST(req: NextRequest) {
       ],
     });
 
-    const jsonText = completion.choices[0].message.content ?? "";
+    const rawContent = message.content[0];
+    if (rawContent.type !== "text") {
+      throw new Error("Unexpected response type from API");
+    }
+
+    let jsonText = rawContent.text.trim();
+    if (jsonText.startsWith("```")) {
+      jsonText = jsonText.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+    }
+
     const result: AnalysisResult = JSON.parse(jsonText);
 
     return NextResponse.json(result);
