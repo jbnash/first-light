@@ -69,18 +69,29 @@ Return this exact shape:
 }
 
 LANGUAGE RULES — these are strict and must be followed exactly:
-- Never use hedging phrases like "could potentially," "might be," "may allow," or "it is possible that." State findings directly and confidently.
-- When the risk is that a student could use AI to complete the work, say so plainly. Use the words "ChatGPT," "an LLM," or "AI" directly. Do not write "a tool could generate a plausible response" when you mean "a student could paste this into ChatGPT and submit what comes back."
-- Analysis text must name the actual consequence for a student considering using AI, and must never stop at describing a feature without stating what it means for AI susceptibility.
+- Never use the word "potentially." Never use "might be," "may allow," "could consider," or "it is possible that." State findings directly and confidently.
+- When the risk is that a student could use AI to complete the work, say so plainly. Use the words "ChatGPT," "an LLM," or "AI" directly. Do not write "a tool could generate a response" when you mean "a student can paste this into ChatGPT and submit what comes back."
+- Analysis text must name the actual consequence for a student considering using AI. Never stop at describing a feature of the assignment without stating what it means for AI susceptibility.
+- The overall_analysis field must describe the situation only. It must not contain recommendations or suggestions for improvement. Recommendations belong only in the recommendations array.
+
+SIGNALS RULES:
+Signals must be direct quotes or close paraphrases of specific language from the submitted text — not category labels.
+BAD signal (category label — do not do this): "Use of specific standards and texts"
+GOOD signal (quoted from the text): "students will talk with a current principal about monitoring student achievement"
+BAD signal: "Limited opportunities for verification"
+GOOD signal: "written report submitted to Canvas with no debrief or follow-up requirement"
+
+DATA VS. COGNITIVE AUTHENTICITY — this distinction is critical and must be applied:
+An assignment that requires real fieldwork (interviewing a principal, observing a classroom, collecting survey data) is NOT automatically protected. The data collection step may be authentic, but the cognitive work that matters — deciding what the data means, building an argument, writing the analysis — happens after the fieldwork and is exactly what a student can hand to ChatGPT. Always ask: what is the gap between the raw experience and the final submitted product? If there is nothing in between that the instructor can see, the assignment is high risk on process_visibility regardless of how real the data source is.
 
 SCORING:
 The overall_score is a weighted average. Weight context_specificity and verification_surface at 1.5x, the others at 1x.
 
 RECOMMENDATIONS:
-Include a "recommendations" array with 3-5 improvements. Each must follow all of these rules:
-1. Named to a specific assignment or requirement from the submitted text — not generic advice that could apply to any course.
+Include exactly 4-5 recommendations. Each must follow all of these rules:
+1. Must name a specific assignment or requirement from the submitted text. Generic advice that could apply to any course is not acceptable.
 2. Written for the instructor, not the student.
-3. The action field must describe exactly what to add or change and explain why ChatGPT cannot complete that step on the student's behalf.
+3. The action field must describe exactly what to add or change and explain specifically why ChatGPT cannot complete that step — because it requires the student's own reaction to their own specific experience.
 4. Tagged with difficulty: "easy" (no structural changes — add a draft requirement, add a debrief), "moderate" (some redesign — restructure submission sequence, add a presentation component), or "significant" (fundamental rethinking — replace the format, rebuild from scratch).
 
 EXAMPLE of a bad recommendation (too generic — do not do this):

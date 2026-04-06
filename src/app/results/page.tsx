@@ -73,7 +73,7 @@ export default function ResultsPage() {
           <p className="text-lg font-semibold text-neutral-700 dark:text-white/80 mb-2 leading-snug">
             {result.overall_headline}
           </p>
-          <p className="text-neutral-500 dark:text-white/50 leading-relaxed text-sm max-w-lg">
+          <p className="text-neutral-500 dark:text-white/50 leading-relaxed text-sm">
             {result.overall_analysis}
           </p>
 
