@@ -55,6 +55,12 @@ export default function ResultsPage() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <button
+            onClick={() => window.open("/print", "_blank")}
+            className="text-xs text-neutral-500 dark:text-white/40 hover:text-neutral-700 dark:hover:text-white/70 transition-colors font-medium flex items-center gap-1.5 border border-neutral-200 dark:border-white/10 px-3 py-1.5 rounded-lg"
+          >
+            Print report →
+          </button>
+          <button
             onClick={() => router.push("/")}
             className="text-xs text-neutral-500 dark:text-white/40 hover:text-neutral-700 dark:hover:text-white/70 transition-colors font-medium flex items-center gap-1.5"
           >
@@ -67,17 +73,41 @@ export default function ResultsPage() {
 
         {/* Overall badge + headline */}
         <div className="mb-8">
-          <h1 className="text-3xl font-black text-neutral-900 dark:text-white mb-3 leading-tight">
-            <OverallBadge score={result.overall_score} />
-          </h1>
+          <div className="flex items-center gap-4 mb-3 flex-wrap">
+            <h1 className="text-3xl font-black text-neutral-900 dark:text-white leading-tight">
+              <OverallBadge score={result.overall_score} />
+            </h1>
+            <div className="flex items-baseline gap-1">
+              <span className={`text-4xl font-black tabular-nums ${
+                result.overall_score >= 8 ? "text-rose-600 dark:text-rose-400" :
+                result.overall_score >= 4 ? "text-amber-600 dark:text-amber-400" :
+                "text-emerald-600 dark:text-emerald-400"
+              }`}>
+                {result.overall_score.toFixed(1)}
+              </span>
+              <span className="text-base text-neutral-400 dark:text-white/30">/10</span>
+            </div>
+          </div>
+
           <p className="text-lg font-semibold text-neutral-700 dark:text-white/80 mb-2 leading-snug">
             {result.overall_headline}
           </p>
-          <p className="text-neutral-500 dark:text-white/50 leading-relaxed text-sm">
+          <p className="text-neutral-500 dark:text-white/50 leading-relaxed text-sm mb-4">
             {result.overall_analysis}
           </p>
 
-          <div className="flex items-center gap-4 mt-5">
+          {result.overall_bullets && result.overall_bullets.length > 0 && (
+            <ul className="space-y-1.5 mb-4">
+              {result.overall_bullets.map((bullet, i) => (
+                <li key={i} className="flex gap-2 text-sm text-neutral-500 dark:text-white/40">
+                  <span className="flex-shrink-0 text-neutral-300 dark:text-white/20">•</span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="flex items-center gap-4">
             {highCount > 0 && (
               <div className="flex items-center gap-1.5 text-xs">
                 <span className="w-2 h-2 rounded-full bg-rose-500 dark:bg-rose-400/80" />

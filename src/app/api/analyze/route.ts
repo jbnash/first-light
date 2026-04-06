@@ -16,6 +16,7 @@ export interface Recommendation {
 }
 
 export interface AnalysisResult {
+  assignment_title: string;
   dimensions: {
     context_specificity: DimensionResult;
     task_openness: DimensionResult;
@@ -26,6 +27,7 @@ export interface AnalysisResult {
   overall_score: number;
   overall_headline: string;
   overall_analysis: string;
+  overall_bullets: string[];
   recommendations: Recommendation[];
 }
 
@@ -50,6 +52,7 @@ Dimensions:
 Return this exact shape:
 
 {
+  "assignment_title": "6-10 word descriptive title derived from the submitted text",
   "dimensions": {
     "context_specificity": {
       "score": 3,
@@ -64,7 +67,12 @@ Return this exact shape:
   },
   "overall_score": 5.2,
   "overall_headline": "...",
-  "overall_analysis": "...",
+  "overall_analysis": "Exactly 2 sentences. First sentence names the core vulnerability. Second sentence names what is genuinely working as a strength.",
+  "overall_bullets": [
+    "Dimension Name (score/10): one sentence stating the key risk or strength for this dimension.",
+    "...",
+    "..."
+  ],
   "recommendations": []
 }
 
@@ -72,7 +80,9 @@ LANGUAGE RULES — these are strict and must be followed exactly:
 - Never use the word "potentially." Never use "might be," "may allow," "could consider," or "it is possible that." State findings directly and confidently.
 - When the risk is that a student could use AI to complete the work, say so plainly. Use the words "ChatGPT," "an LLM," or "AI" directly. Do not write "a tool could generate a response" when you mean "a student can paste this into ChatGPT and submit what comes back."
 - Analysis text must name the actual consequence for a student considering using AI. Never stop at describing a feature of the assignment without stating what it means for AI susceptibility.
-- The overall_analysis field must describe the situation only. It must not contain recommendations or suggestions for improvement. Recommendations belong only in the recommendations array.
+- The overall_analysis field must be exactly 2 sentences. First sentence names the core vulnerability. Second sentence names what is genuinely working. No recommendations.
+- The overall_bullets array must contain exactly 3-4 strings. Each covers one key dimension. Format: "Dimension Name (score/10): one sentence about the key risk or strength." Prioritize the highest and lowest scoring dimensions.
+- The assignment_title must be 6-10 words derived from the submitted text, describing what this assignment or course actually is.
 
 SIGNALS RULES:
 Signals must be direct quotes or close paraphrases of specific language from the submitted text — not category labels.
