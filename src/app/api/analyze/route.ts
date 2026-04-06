@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 import { NextRequest, NextResponse } from "next/server";
 
 export interface DimensionResult {
@@ -85,7 +85,7 @@ Add the recommendations array to the JSON shape like this:
   }
 ]`;
 
-const apiKey = process.env.GOOGLE_AI_API_KEY;
+const apiKey = process.env.GROQ_API_KEY;
 
 export async function POST(req: NextRequest) {
   try {
@@ -105,21 +105,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash-latest",
-      systemInstruction: SYSTEM_PROMPT,
-      generationConfig: {
-        responseMimeType: "application/json",
-        maxOutputTokens: 2048,
-      },
+    const client = new Groq({ apiKey });
+
+    const completion = await client.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      max_tokens: 2048,
+      response_format: { type: "json_object" },
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        {
+          role: "user",
+          content: `Please analyze the following assignment or syllabus text:\n\n---\n${text.trim()}\n---`,
+        },
+      ],
     });
 
-    const response = await model.generateContent(
-      `Please analyze the following assignment or syllabus text:\n\n---\n${text.trim()}\n---`
-    );
-
-    const jsonText = response.response.text().trim();
+    const jsonText = completion.choices[0].message.content ?? "";
     const result: AnalysisResult = JSON.parse(jsonText);
 
     return NextResponse.json(result);
