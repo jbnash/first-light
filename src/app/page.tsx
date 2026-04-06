@@ -111,9 +111,9 @@ export default function Home() {
         </div>
 
         <h1 className="text-5xl font-black tracking-tight text-neutral-900 dark:text-white max-w-2xl leading-[1.05] text-balance mb-4">
-          Would you know if a student used{" "}
+          See if a student could just have{" "}
           <span className="text-amber-500 dark:text-amber-400">ChatGPT</span>{" "}
-          on this?
+          do your assignments.
         </h1>
 
         <p className="text-lg text-neutral-500 dark:text-white/50 max-w-lg leading-relaxed text-balance">

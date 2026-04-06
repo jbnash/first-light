@@ -171,7 +171,7 @@ export default function ResultsPage() {
         </div>
 
         <p className="text-center text-xs text-neutral-400 dark:text-white/15 mt-8">
-          First Light · Powered by Claude · For educational use · © 2026 John Nash
+          First Light · Powered by Claude · For educational use · © 2026 John Nash · <a href="https://tally.so/r/kdWB7e" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Share feedback</a>
         </p>
       </div>
     </main>
