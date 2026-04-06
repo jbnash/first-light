@@ -170,8 +170,21 @@ export default function ResultsPage() {
           </div>
         </div>
 
-        <p className="text-center text-xs text-neutral-400 dark:text-white/15 mt-8">
-          First Light · Powered by Claude · For educational use · © 2026 John Nash · <a href="https://tally.so/r/kdWB7e" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Share feedback</a>
+        {/* Feedback prompt */}
+        <div className="mt-10 text-center">
+          <a
+            href="https://tally.so/r/kdWB7e"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-neutral-200 dark:border-white/10 text-sm text-neutral-500 dark:text-white/40 hover:text-neutral-800 dark:hover:text-white/70 hover:border-neutral-300 dark:hover:border-white/20 bg-white dark:bg-white/[0.02] transition-colors"
+          >
+            <span>Did this feel accurate?</span>
+            <span className="text-amber-500 dark:text-amber-400">Share feedback →</span>
+          </a>
+        </div>
+
+        <p className="text-center text-xs text-neutral-400 dark:text-white/15 mt-6">
+          First Light · Powered by Claude · For educational use · © 2026 John Nash
         </p>
       </div>
     </main>
