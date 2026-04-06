@@ -232,7 +232,7 @@ export default function Home() {
             {" "}A low score means the assignment is harder to hand off to an AI.
           </p>
           <p className="text-center text-xs text-neutral-400 dark:text-white/20 leading-relaxed">
-            Powered by Claude · Nothing you paste is stored · For educational use · © 2026 John Nash
+            Nothing you paste is stored · For educational use · © 2026 John Nash
           </p>
         </div>
       </div>
