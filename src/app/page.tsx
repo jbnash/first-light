@@ -111,9 +111,9 @@ export default function Home() {
         </div>
 
         <h1 className="text-5xl font-black tracking-tight text-neutral-900 dark:text-white max-w-2xl leading-[1.05] text-balance mb-4">
-          How hard would it be for a student to have{" "}
-          <span className="text-amber-500 dark:text-amber-400">ChatGPT</span>{" "}
-          do your assignments?
+          How{" "}
+          <span className="text-amber-500 dark:text-amber-400">AI-proof</span>{" "}
+          are your assignments?
         </h1>
 
         <p className="text-lg text-neutral-500 dark:text-white/50 max-w-lg leading-relaxed text-balance">
