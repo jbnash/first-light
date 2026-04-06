@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { AnalysisResult } from "@/app/api/analyze/route";
-import ScoreGauge from "@/components/ScoreGauge";
+import RadarChart from "@/components/RadarChart";
 import DimensionCard from "@/components/DimensionCard";
 import OverallBadge from "@/components/OverallBadge";
 import PunchList from "@/components/PunchList";
@@ -65,42 +65,46 @@ export default function ResultsPage() {
 
       <div className="relative z-10 max-w-3xl mx-auto px-6 py-12 animate-fade-in">
 
-        {/* Hero score section */}
-        <div className="flex flex-col sm:flex-row sm:items-start gap-8 mb-12">
-          <div className="flex-1">
-            <h1 className="text-3xl font-black text-neutral-900 dark:text-white mb-3 leading-tight">
-              <OverallBadge score={result.overall_score} />
-            </h1>
-            <p className="text-lg font-semibold text-neutral-700 dark:text-white/80 mb-2 leading-snug">
-              {result.overall_headline}
-            </p>
-            <p className="text-neutral-500 dark:text-white/50 leading-relaxed text-sm max-w-lg">
-              {result.overall_analysis}
-            </p>
+        {/* Overall badge + headline */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-black text-neutral-900 dark:text-white mb-3 leading-tight">
+            <OverallBadge score={result.overall_score} />
+          </h1>
+          <p className="text-lg font-semibold text-neutral-700 dark:text-white/80 mb-2 leading-snug">
+            {result.overall_headline}
+          </p>
+          <p className="text-neutral-500 dark:text-white/50 leading-relaxed text-sm max-w-lg">
+            {result.overall_analysis}
+          </p>
 
-            <div className="flex items-center gap-4 mt-5">
-              {highCount > 0 && (
-                <div className="flex items-center gap-1.5 text-xs">
-                  <span className="w-2 h-2 rounded-full bg-rose-500 dark:bg-rose-400/80" />
-                  <span className="text-neutral-500 dark:text-white/40">
-                    {highCount} high concern {highCount === 1 ? "dimension" : "dimensions"}
-                  </span>
-                </div>
-              )}
-              {lowCount > 0 && (
-                <div className="flex items-center gap-1.5 text-xs">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400/80" />
-                  <span className="text-neutral-500 dark:text-white/40">
-                    {lowCount} low concern {lowCount === 1 ? "dimension" : "dimensions"}
-                  </span>
-                </div>
-              )}
-            </div>
+          <div className="flex items-center gap-4 mt-5">
+            {highCount > 0 && (
+              <div className="flex items-center gap-1.5 text-xs">
+                <span className="w-2 h-2 rounded-full bg-rose-500 dark:bg-rose-400/80" />
+                <span className="text-neutral-500 dark:text-white/40">
+                  {highCount} high concern {highCount === 1 ? "dimension" : "dimensions"}
+                </span>
+              </div>
+            )}
+            {lowCount > 0 && (
+              <div className="flex items-center gap-1.5 text-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400/80" />
+                <span className="text-neutral-500 dark:text-white/40">
+                  {lowCount} low concern {lowCount === 1 ? "dimension" : "dimensions"}
+                </span>
+              </div>
+            )}
           </div>
+        </div>
 
-          <div className="flex-shrink-0">
-            <ScoreGauge overallScore={result.overall_score} scores={scores} />
+        {/* Radar chart — full-width, labeled */}
+        <div className="rounded-2xl border border-neutral-200 dark:border-white/8 bg-white dark:bg-white/[0.02] p-4 sm:p-6 mb-10">
+          <div className="max-w-md mx-auto">
+            <RadarChart overallScore={result.overall_score} scores={scores} />
           </div>
+          <p className="text-center text-xs text-neutral-400 dark:text-white/25 mt-1">
+            Hover any point to highlight · <span className="font-medium text-emerald-600 dark:text-emerald-400">Lower is better</span>
+          </p>
         </div>
 
         <div className="border-t border-neutral-200 dark:border-white/6 mb-10" />

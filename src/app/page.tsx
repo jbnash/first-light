@@ -5,6 +5,39 @@ import { useRouter } from "next/navigation";
 import type { AnalysisResult } from "@/app/api/analyze/route";
 import ThemeToggle from "@/components/ThemeToggle";
 
+const DIMENSIONS_INFO = [
+  {
+    name: "Context Specificity",
+    question: "Could AI do this without your course?",
+    detail:
+      "Does completing the assignment require materials, discussions, or knowledge only available inside your specific course — or would generic knowledge be enough?",
+  },
+  {
+    name: "Task Openness",
+    question: "Is there one obvious, templateable answer?",
+    detail:
+      "A prompt that's broad or generic enough that thousands of reasonable responses exist is easy to hand to an LLM. A prompt that demands something truly specific to this student in this course is harder to fake.",
+  },
+  {
+    name: "Process Visibility",
+    question: "Can you see how the student got there?",
+    detail:
+      "This is the most commonly missed dimension. Real fieldwork (interviews, observations, surveys) doesn't answer it — the risk is what happens after the data is collected. If there's no visible step between the experience and the final submission, a student can hand the synthesis step entirely to an AI.",
+  },
+  {
+    name: "Output Type",
+    question: "How fluently could AI produce this format?",
+    detail:
+      "Essays, reports, and reflections are formats AI handles extremely well. Formats that require live performance, visual artifact creation, or structured in-person interaction are harder to fake.",
+  },
+  {
+    name: "Verification Surface",
+    question: "Any other way to know it's really their work?",
+    detail:
+      "How much can an instructor cross-check this submission against other evidence — class participation, prior drafts, in-person conversation, known writing patterns? A submission that arrives in a vacuum with no other touchpoints is easy to fabricate.",
+  },
+];
+
 const PLACEHOLDER = `Example: Paste your assignment prompt, rubric, or syllabus section here.
 
 e.g. "Write a 1000-word argumentative essay on a topic of your choice related to the themes we have discussed in class. Your essay should include a clear thesis, supporting evidence, and a conclusion. Submit via Canvas by Friday at midnight."`;
@@ -15,6 +48,7 @@ export default function Home() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showDimensions, setShowDimensions] = useState(false);
   const router = useRouter();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -85,6 +119,30 @@ export default function Home() {
         <p className="text-lg text-neutral-500 dark:text-white/50 max-w-lg leading-relaxed text-balance">
           Paste any assignment prompt or syllabus section. We'll analyze how well the design verifies genuine student learning — across five dimensions.
         </p>
+
+        <button
+          onClick={() => setShowDimensions((v) => !v)}
+          className="mt-4 text-xs text-amber-600 dark:text-amber-400/70 hover:text-amber-500 dark:hover:text-amber-400 transition-colors font-medium flex items-center gap-1"
+        >
+          <span>{showDimensions ? "▲" : "▼"}</span>
+          <span>{showDimensions ? "Hide dimension guide" : "What are the five dimensions?"}</span>
+        </button>
+
+        {showDimensions && (
+          <div className="mt-4 w-full max-w-2xl px-6">
+            <div className="rounded-2xl border border-neutral-200 dark:border-white/8 bg-white dark:bg-white/[0.03] divide-y divide-neutral-100 dark:divide-white/5 shadow-sm">
+              {DIMENSIONS_INFO.map((d, i) => (
+                <div key={i} className="px-5 py-4">
+                  <div className="flex items-baseline gap-2 mb-1">
+                    <span className="text-xs font-bold text-neutral-700 dark:text-white/80">{d.name}</span>
+                    <span className="text-xs text-neutral-400 dark:text-white/30 italic">{d.question}</span>
+                  </div>
+                  <p className="text-xs text-neutral-500 dark:text-white/40 leading-relaxed">{d.detail}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Main input card */}
@@ -135,9 +193,11 @@ export default function Home() {
               disabled={!isReady || loading}
               className={`
                 relative flex items-center gap-2.5 px-6 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200
-                ${isReady && !loading
-                  ? "bg-amber-500 dark:bg-amber-400 text-white dark:text-black hover:bg-amber-400 dark:hover:bg-amber-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-amber-500/20 dark:shadow-amber-400/20"
-                  : "bg-neutral-200 dark:bg-white/8 text-neutral-400 dark:text-white/25 cursor-not-allowed"
+                ${loading
+                  ? "bg-amber-500/75 dark:bg-amber-400/60 text-white dark:text-black cursor-wait"
+                  : isReady
+                    ? "bg-amber-500 dark:bg-amber-400 text-white dark:text-black hover:bg-amber-400 dark:hover:bg-amber-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-amber-500/20 dark:shadow-amber-400/20"
+                    : "bg-neutral-200 dark:bg-white/8 text-neutral-400 dark:text-white/25 cursor-not-allowed"
                 }
               `}
             >
