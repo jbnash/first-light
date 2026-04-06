@@ -97,7 +97,7 @@ export default function PunchList({ recommendations, overallScore, overallHeadli
             Punch List
           </h2>
           <p className="text-xs text-neutral-500 dark:text-white/30 mt-0.5 leading-relaxed">
-            Specific changes that reduce AI susceptibility — copy to share with a teaching center or paste into your own notes.
+            Specific changes that reduce AI susceptibility. Copy to share with a teaching center or paste into your own notes.
           </p>
         </div>
         <button

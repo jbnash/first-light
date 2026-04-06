@@ -59,7 +59,7 @@ const dimensionMeta: Record<string, { question: string; subhead: string }> = {
   },
   process_visibility: {
     question: "Can you see how they got there?",
-    subhead: "Caution: real fieldwork doesn't answer this. The risk is in the gap between what they experienced and what they submitted — that's where cognitive offloading happens.",
+    subhead: "Caution: real fieldwork doesn't answer this. The risk is in the gap between what they experienced and what they submitted. That's where cognitive offloading happens.",
   },
   output_type: {
     question: "Easy to fake?",

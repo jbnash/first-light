@@ -145,26 +145,26 @@ export default function ResultsPage() {
               How to read this
             </h3>
             <span className="text-xs text-neutral-500 dark:text-white/30">
-              <span className="font-semibold text-emerald-600 dark:text-emerald-400">Lower scores are better</span> — 1 is hardest to delegate, 10 is easiest
+              <span className="font-semibold text-emerald-600 dark:text-emerald-400">Lower scores are better.</span> 1 is hardest to delegate, 10 is easiest.
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-neutral-500 dark:text-white/40 leading-relaxed">
             <div className="flex gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400/70 mt-0.5 flex-shrink-0" />
               <div>
-                <span className="text-emerald-700 dark:text-emerald-400/80 font-medium">Low concern (1–3)</span> — this dimension is doing its job. The design makes it genuinely harder to delegate to an AI.
+                <span className="text-emerald-700 dark:text-emerald-400/80 font-medium">Low concern (1–3):</span> this dimension is doing its job. The design makes it genuinely harder to delegate to an AI.
               </div>
             </div>
             <div className="flex gap-2">
               <span className="w-2 h-2 rounded-full bg-amber-500 dark:bg-amber-400/70 mt-0.5 flex-shrink-0" />
               <div>
-                <span className="text-amber-700 dark:text-amber-400/80 font-medium">Worth a look (4–7)</span> — some gaps worth thinking about. A motivated student could work around this.
+                <span className="text-amber-700 dark:text-amber-400/80 font-medium">Worth a look (4–7):</span> some gaps worth thinking about. A motivated student could work around this.
               </div>
             </div>
             <div className="flex gap-2">
               <span className="w-2 h-2 rounded-full bg-rose-500 dark:bg-rose-400/70 mt-0.5 flex-shrink-0" />
               <div>
-                <span className="text-rose-700 dark:text-rose-400/80 font-medium">High concern (8–10)</span> — a student could hand this to an AI and submit what comes back.
+                <span className="text-rose-700 dark:text-rose-400/80 font-medium">High concern (8–10):</span> a student could hand this to an AI and submit what comes back.
               </div>
             </div>
           </div>

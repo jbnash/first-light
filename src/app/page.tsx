@@ -10,19 +10,19 @@ const DIMENSIONS_INFO = [
     name: "Context Specificity",
     question: "Could AI do this without your course?",
     detail:
-      "Does completing the assignment require materials, discussions, or knowledge only available inside your specific course — or would generic knowledge be enough?",
+      "Does completing the assignment require materials, discussions, or knowledge only available inside your specific course? Or would generic knowledge be enough?",
   },
   {
     name: "Task Openness",
     question: "Is there one obvious, templateable answer?",
     detail:
-      "A prompt that's broad or generic enough that thousands of reasonable responses exist is easy to hand to an LLM. A prompt that demands something truly specific to this student in this course is harder to fake.",
+      "The more open-ended a prompt, the easier it is to generate a plausible response without any course-specific grounding. Assignments that demand something only this student, in this course, at this moment could produce are genuinely harder to fake.",
   },
   {
     name: "Process Visibility",
     question: "Can you see how the student got there?",
     detail:
-      "This is the most commonly missed dimension. Real fieldwork (interviews, observations, surveys) doesn't answer it — the risk is what happens after the data is collected. If there's no visible step between the experience and the final submission, a student can hand the synthesis step entirely to an AI.",
+      "This is the most commonly missed dimension. Real fieldwork (interviews, observations, surveys) doesn't answer it. The risk is what happens after the data is collected. If there's no visible step between the experience and the final submission, a student can hand the synthesis step entirely to an AI.",
   },
   {
     name: "Output Type",
@@ -34,7 +34,7 @@ const DIMENSIONS_INFO = [
     name: "Verification Surface",
     question: "Any other way to know it's really their work?",
     detail:
-      "How much can an instructor cross-check this submission against other evidence — class participation, prior drafts, in-person conversation, known writing patterns? A submission that arrives in a vacuum with no other touchpoints is easy to fabricate.",
+      "How much can an instructor cross-check this submission against other evidence: class participation, prior drafts, in-person conversation, known writing patterns? A submission that arrives in a vacuum with no other touchpoints is easy to fabricate.",
   },
 ];
 
@@ -111,13 +111,13 @@ export default function Home() {
         </div>
 
         <h1 className="text-5xl font-black tracking-tight text-neutral-900 dark:text-white max-w-2xl leading-[1.05] text-balance mb-4">
-          What does your{" "}
-          <span className="text-amber-500 dark:text-amber-400">assignment</span>{" "}
-          actually measure?
+          Would you know if a student used{" "}
+          <span className="text-amber-500 dark:text-amber-400">ChatGPT</span>{" "}
+          on this?
         </h1>
 
         <p className="text-lg text-neutral-500 dark:text-white/50 max-w-lg leading-relaxed text-balance">
-          Paste any assignment prompt or syllabus section. We'll analyze how well the design verifies genuine student learning — across five dimensions.
+          Paste any assignment prompt or syllabus section. We'll analyze it across five dimensions and give you a specific list of fixes.
         </p>
 
         <button
@@ -181,7 +181,7 @@ export default function Home() {
           <div className="flex items-center justify-between px-5 py-4 border-t border-neutral-200 dark:border-white/6 bg-neutral-50 dark:bg-white/[0.02]">
             <div className="text-xs text-neutral-500 dark:text-white/30">
               {!isReady && charCount > 0 && (
-                <span>Keep going — need a bit more text</span>
+                <span>Need a bit more text</span>
               )}
               {isReady && (
                 <span className="text-emerald-600 dark:text-emerald-400/70">Ready to analyze</span>
@@ -228,8 +228,8 @@ export default function Home() {
         <div className="mt-8 flex flex-col items-center gap-3">
           <p className="text-center text-xs text-neutral-500 dark:text-white/30 leading-relaxed">
             Scores run 1–10.{" "}
-            <span className="font-semibold text-emerald-600 dark:text-emerald-400">Lower is better</span>
-            {" "}— a low score means the assignment is harder to hand off to an AI.
+            <span className="font-semibold text-emerald-600 dark:text-emerald-400">Lower is better.</span>
+            {" "}A low score means the assignment is harder to hand off to an AI.
           </p>
           <p className="text-center text-xs text-neutral-400 dark:text-white/20 leading-relaxed">
             Powered by Claude · Nothing you paste is stored · For educational use · © 2026 John Nash
