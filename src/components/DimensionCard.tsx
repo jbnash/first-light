@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { DimensionResult } from "@/app/api/analyze/route";
 
 interface DimensionCardProps {
   dimensionKey: string;
   dim: DimensionResult;
   index: number;
+  forceExpanded?: boolean;
 }
 
 function scoreCategory(score: number): "low" | "medium" | "high" {
@@ -71,14 +72,19 @@ const dimensionMeta: Record<string, { question: string; subhead: string }> = {
   },
 };
 
-export default function DimensionCard({ dimensionKey, dim, index }: DimensionCardProps) {
+export default function DimensionCard({ dimensionKey, dim, index, forceExpanded }: DimensionCardProps) {
   const [expanded, setExpanded] = useState(false);
   const category = scoreCategory(dim.score);
   const cfg = categoryConfig[category];
   const meta = dimensionMeta[dimensionKey];
 
+  useEffect(() => {
+    if (forceExpanded) setExpanded(true);
+  }, [forceExpanded]);
+
   return (
     <div
+      id={`dim-${dimensionKey}`}
       className={`rounded-xl border ${cfg.border} ${cfg.bg} overflow-hidden transition-all duration-200 animate-slide-up`}
       style={{ animationDelay: `${index * 60}ms`, animationFillMode: "both" }}
     >

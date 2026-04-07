@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import type { AnalysisResult } from "@/app/api/analyze/route";
 import RadarChart from "@/components/RadarChart";
@@ -19,6 +19,7 @@ const DIMENSION_ORDER = [
 
 export default function ResultsPage() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [activeDimension, setActiveDimension] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -39,7 +40,16 @@ export default function ResultsPage() {
     );
   }
 
+  const handleDimensionClick = useCallback((index: number) => {
+    const key = DIMENSION_ORDER[index];
+    setActiveDimension(key);
+    setTimeout(() => {
+      document.getElementById(`dim-${key}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
+  }, []);
+
   const scores = DIMENSION_ORDER.map((k) => result.dimensions[k].score);
+  const headlines = DIMENSION_ORDER.map((k) => result.dimensions[k].headline);
   const highCount = scores.filter((s) => s >= 8).length;
   const lowCount = scores.filter((s) => s <= 3).length;
 
@@ -130,11 +140,13 @@ export default function ResultsPage() {
         {/* Radar chart — full-width, labeled */}
         <div className="rounded-2xl border border-neutral-200 dark:border-white/8 bg-white dark:bg-white/[0.02] p-4 sm:p-6 mb-10">
           <div className="max-w-md mx-auto">
-            <RadarChart overallScore={result.overall_score} scores={scores} />
+            <RadarChart
+              overallScore={result.overall_score}
+              scores={scores}
+              headlines={headlines}
+              onDimensionClick={handleDimensionClick}
+            />
           </div>
-          <p className="text-center text-xs text-neutral-400 dark:text-white/25 mt-1">
-            Hover any point to highlight · <span className="font-medium text-emerald-600 dark:text-emerald-400">Lower is better</span>
-          </p>
         </div>
 
         <div className="border-t border-neutral-200 dark:border-white/6 mb-10" />
@@ -152,6 +164,7 @@ export default function ResultsPage() {
               dimensionKey={key}
               dim={result.dimensions[key]}
               index={i}
+              forceExpanded={activeDimension === key}
             />
           ))}
         </div>
