@@ -32,14 +32,6 @@ export default function ResultsPage() {
     }
   }, [router]);
 
-  if (!result) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-6 h-6 rounded-full border-2 border-amber-500 dark:border-amber-400 border-t-transparent animate-spin" />
-      </div>
-    );
-  }
-
   const handleDimensionClick = useCallback((index: number) => {
     const key = DIMENSION_ORDER[index];
     setActiveDimension(key);
@@ -47,6 +39,14 @@ export default function ResultsPage() {
       document.getElementById(`dim-${key}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 50);
   }, []);
+
+  if (!result) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-6 h-6 rounded-full border-2 border-amber-500 dark:border-amber-400 border-t-transparent animate-spin" />
+      </div>
+    );
+  }
 
   const scores = DIMENSION_ORDER.map((k) => result.dimensions[k].score);
   const headlines = DIMENSION_ORDER.map((k) => result.dimensions[k].headline);
