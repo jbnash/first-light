@@ -52,6 +52,10 @@ const PROGRESS_MESSAGES = [
   "Asking if ChatGPT would enjoy this assignment...",
   "Running the rubric...",
   "Almost there...",
+  "One more pass...",
+  "Doing the math on this one...",
+  "Weighing the evidence...",
+  "Cross-referencing the five dimensions...",
 ];
 
 export default function Home() {
