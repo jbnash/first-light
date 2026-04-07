@@ -214,7 +214,7 @@ export default function ResultsPage() {
         </div>
 
         <p className="text-center text-xs text-neutral-400 dark:text-white/15 mt-6">
-          First Light · For educational use · © 2026 John Nash
+          First Light · For educational use · © 2026 John Nash · <a href="/evidence" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/15 transition-colors">Research basis</a>
         </p>
       </div>
     </main>

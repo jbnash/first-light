@@ -140,6 +140,14 @@ export default function Home() {
                   <p className="text-xs text-neutral-500 dark:text-white/40 leading-relaxed">{d.detail}</p>
                 </div>
               ))}
+              <div className="px-5 py-3">
+                <a
+                  href="/evidence"
+                  className="text-xs text-amber-600 dark:text-amber-400/70 hover:text-amber-500 dark:hover:text-amber-400 transition-colors font-medium"
+                >
+                  See the research basis for these dimensions →
+                </a>
+              </div>
             </div>
           </div>
         )}
@@ -232,7 +240,7 @@ export default function Home() {
             {" "}A low score means the assignment is harder to hand off to an AI.
           </p>
           <p className="text-center text-xs text-neutral-400 dark:text-white/20 leading-relaxed">
-            Nothing you paste is stored · For educational use · © 2026 John Nash
+            Nothing you paste is stored · For educational use · © 2026 John Nash · <a href="/evidence" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Research basis</a>
           </p>
         </div>
       </div>
