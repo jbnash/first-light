@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { AnalysisResult } from "@/app/api/analyze/route";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -44,13 +44,41 @@ e.g. "Write a 1000-word argumentative essay on a topic of your choice related to
 
 const EXAMPLE_SHORT = `Write a 5-page research paper arguing a position on a social issue of your choice. Your paper should include at least 5 scholarly sources cited in APA format. A clear thesis, organized body paragraphs, and a conclusion are required. Submit to Turnitin by the last day of class.`;
 
+const PROGRESS_MESSAGES = [
+  "Reading carefully...",
+  "Thinking this through...",
+  "Looking at this from a few angles...",
+  "Thinking like a student with an 11pm deadline...",
+  "Asking if ChatGPT would enjoy this assignment...",
+  "Running the rubric...",
+  "Almost there...",
+];
+
 export default function Home() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showDimensions, setShowDimensions] = useState(false);
+  const [progressIndex, setProgressIndex] = useState(0);
+  const [progressVisible, setProgressVisible] = useState(true);
   const router = useRouter();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (!loading) {
+      setProgressIndex(0);
+      setProgressVisible(true);
+      return;
+    }
+    const interval = setInterval(() => {
+      setProgressVisible(false);
+      setTimeout(() => {
+        setProgressIndex((i) => (i + 1) % PROGRESS_MESSAGES.length);
+        setProgressVisible(true);
+      }, 300);
+    }, 2800);
+    return () => clearInterval(interval);
+  }, [loading]);
 
   const charCount = text.length;
   const isReady = charCount >= 40;
@@ -227,8 +255,19 @@ export default function Home() {
           </div>
         </div>
 
+        <div className="mt-4 min-h-[28px] flex items-center justify-center">
+          {loading && (
+            <p
+              className="text-sm text-neutral-500 dark:text-white/40 transition-opacity duration-300"
+              style={{ opacity: progressVisible ? 1 : 0 }}
+            >
+              {PROGRESS_MESSAGES[progressIndex]}
+            </p>
+          )}
+        </div>
+
         {error && (
-          <div className="mt-4 px-4 py-3 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 text-sm">
+          <div className="mt-2 px-4 py-3 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 text-sm">
             {error}
           </div>
         )}
