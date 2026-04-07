@@ -179,7 +179,7 @@ export default function EvidencePage() {
             Evidence Base for the Five-Dimension Rubric
           </h1>
           <p className="text-neutral-500 dark:text-white/50 text-sm leading-relaxed">
-            A reference document for beta reviewers · First Light Assessment Tool · John Nash
+            A reference document for beta reviewers · First Light Assessment Tool · John Nash, PhD
           </p>
         </div>
 
