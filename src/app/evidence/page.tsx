@@ -262,9 +262,22 @@ export default function EvidencePage() {
           </ol>
         </div>
 
-        <p className="text-center text-xs text-neutral-400 dark:text-white/15 mt-12">
-          First Light · For educational use · © 2026 John Nash
-        </p>
+        <div className="mt-12 text-center">
+          <p className="text-xs text-neutral-500 dark:text-white/30">
+            First Light is developed by{" "}
+            <a
+              href="https://linkedin.com/in/jnash"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-neutral-600 dark:text-white/50 underline underline-offset-2 decoration-neutral-300 dark:decoration-white/20 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+            >
+              John Nash, PhD
+            </a>
+          </p>
+          <p className="text-xs text-neutral-400 dark:text-white/15 mt-1">
+            First Light · For educational use · © 2026 John Nash
+          </p>
+        </div>
       </div>
     </main>
   );
