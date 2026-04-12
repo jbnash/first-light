@@ -122,9 +122,9 @@ export default function ResultsPage() {
 
         {/* Radar chart + summary side-by-side */}
         <div className="rounded-2xl border border-neutral-200 dark:border-white/8 bg-white dark:bg-white/[0.02] p-4 sm:p-6 mb-10">
-          <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
+          <div className="flex flex-col sm:flex-row gap-6 items-start">
             {/* Score bars */}
-            <div className="w-full md:w-56 flex-shrink-0">
+            <div className="w-full sm:w-56 flex-shrink-0">
               <ScoreBars
                 scores={scores}
                 onDimensionClick={handleDimensionClick}
