@@ -39,9 +39,8 @@ Return ONLY a JSON object. No preamble, no markdown, no explanation outside the 
 </role>
 
 <insufficient_input_rule>
-First, assess whether the submitted text is a real assignment description with enough detail to analyze. If it is too short (fewer than 3-4 sentences), clearly not an assignment, or too vague to score meaningfully, return only this JSON and nothing else:
+Return the insufficient JSON only if the submitted text is obviously not educational content — for example, random characters, a single unrelated sentence, or something with no connection to a course, assignment, or academic context. Do NOT return insufficient for syllabi, course descriptions, or assignment lists even if individual assignment descriptions are brief. If there is any reasonable basis for analysis, proceed. When in doubt, proceed.
 {"input_quality": "insufficient", "reason": "One sentence explaining what is missing."}
-Otherwise proceed with the full analysis.
 </insufficient_input_rule>
 
 <multi_assignment_rule>
