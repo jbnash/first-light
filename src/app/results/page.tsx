@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import type { AnalysisResult } from "@/app/api/analyze/route";
-import RadarChart from "@/components/RadarChart";
+import ScoreBars from "@/components/ScoreBars";
 import DimensionCard from "@/components/DimensionCard";
 import OverallBadge from "@/components/OverallBadge";
 import PunchList from "@/components/PunchList";
@@ -118,50 +118,54 @@ export default function ResultsPage() {
             </div>
           )}
 
-          <p className="text-neutral-500 dark:text-white/50 leading-relaxed text-sm mb-4">
-            {result.overall_analysis}
-          </p>
-
-          {result.overall_bullets && result.overall_bullets.length > 0 && (
-            <ul className="space-y-1.5 mb-4">
-              {result.overall_bullets.map((bullet, i) => (
-                <li key={i} className="flex gap-2 text-sm text-neutral-500 dark:text-white/40">
-                  <span className="flex-shrink-0 text-neutral-300 dark:text-white/20">•</span>
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-
-          <div className="flex items-center gap-4">
-            {highCount > 0 && (
-              <div className="flex items-center gap-1.5 text-xs">
-                <span className="w-2 h-2 rounded-full bg-rose-500 dark:bg-rose-400/80" />
-                <span className="text-neutral-500 dark:text-white/40">
-                  {highCount} high concern {highCount === 1 ? "dimension" : "dimensions"}
-                </span>
-              </div>
-            )}
-            {lowCount > 0 && (
-              <div className="flex items-center gap-1.5 text-xs">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400/80" />
-                <span className="text-neutral-500 dark:text-white/40">
-                  {lowCount} low concern {lowCount === 1 ? "dimension" : "dimensions"}
-                </span>
-              </div>
-            )}
-          </div>
         </div>
 
-        {/* Radar chart — full-width, labeled */}
+        {/* Radar chart + summary side-by-side */}
         <div className="rounded-2xl border border-neutral-200 dark:border-white/8 bg-white dark:bg-white/[0.02] p-4 sm:p-6 mb-10">
-          <div className="max-w-md mx-auto">
-            <RadarChart
-              overallScore={result.overall_score}
-              scores={scores}
-              headlines={headlines}
-              onDimensionClick={handleDimensionClick}
-            />
+          <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
+            {/* Score bars */}
+            <div className="w-full md:w-56 flex-shrink-0">
+              <ScoreBars
+                scores={scores}
+                onDimensionClick={handleDimensionClick}
+              />
+            </div>
+            {/* Summary */}
+            <div className="flex-1 min-w-0">
+              <p className="text-neutral-500 dark:text-white/50 leading-relaxed text-sm mb-4">
+                {result.overall_analysis}
+              </p>
+
+              {result.overall_bullets && result.overall_bullets.length > 0 && (
+                <ul className="space-y-1.5 mb-4">
+                  {result.overall_bullets.map((bullet, i) => (
+                    <li key={i} className="flex gap-2 text-sm text-neutral-500 dark:text-white/40">
+                      <span className="flex-shrink-0 text-neutral-300 dark:text-white/20">•</span>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <div className="flex items-center gap-4">
+                {highCount > 0 && (
+                  <div className="flex items-center gap-1.5 text-xs">
+                    <span className="w-2 h-2 rounded-full bg-rose-500 dark:bg-rose-400/80" />
+                    <span className="text-neutral-500 dark:text-white/40">
+                      {highCount} high concern {highCount === 1 ? "dimension" : "dimensions"}
+                    </span>
+                  </div>
+                )}
+                {lowCount > 0 && (
+                  <div className="flex items-center gap-1.5 text-xs">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400/80" />
+                    <span className="text-neutral-500 dark:text-white/40">
+                      {lowCount} low concern {lowCount === 1 ? "dimension" : "dimensions"}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
