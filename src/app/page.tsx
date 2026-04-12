@@ -224,12 +224,26 @@ export default function Home() {
 
           {/* Card footer */}
           <div className="flex items-center justify-between px-5 py-4 border-t border-neutral-200 dark:border-white/6 bg-neutral-50 dark:bg-white/[0.02]">
-            <div className="text-xs text-neutral-500 dark:text-white/30">
-              {!isReady && charCount > 0 && (
-                <span>Need a bit more text</span>
-              )}
-              {isReady && (
-                <span className="text-emerald-600 dark:text-emerald-400/70">Ready to analyze</span>
+            <div className="text-xs text-neutral-500 dark:text-white/30 min-w-0 flex-1 mr-4">
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-0.5 flex-shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-bounce [animation-delay:-0.3s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-bounce [animation-delay:-0.15s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-bounce" />
+                  </div>
+                  <span
+                    className="truncate transition-opacity duration-300 text-neutral-500 dark:text-white/40"
+                    style={{ opacity: progressVisible ? 1 : 0 }}
+                  >
+                    {PROGRESS_MESSAGES[progressIndex]}
+                  </span>
+                </div>
+              ) : (
+                <>
+                  {!isReady && charCount > 0 && <span>Need a bit more text</span>}
+                  {isReady && <span className="text-emerald-600 dark:text-emerald-400/70">Ready to analyze</span>}
+                </>
               )}
             </div>
 
@@ -262,17 +276,6 @@ export default function Home() {
               )}
             </button>
           </div>
-        </div>
-
-        <div className="mt-4 min-h-[28px] flex items-center justify-center">
-          {loading && (
-            <p
-              className="text-sm text-neutral-500 dark:text-white/40 transition-opacity duration-300"
-              style={{ opacity: progressVisible ? 1 : 0 }}
-            >
-              {PROGRESS_MESSAGES[progressIndex]}
-            </p>
-          )}
         </div>
 
         {error && (

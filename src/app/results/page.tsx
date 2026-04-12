@@ -83,6 +83,12 @@ export default function ResultsPage() {
 
         {/* Overall badge + headline */}
         <div className="mb-8">
+          {result.assignment_title && (
+            <p className="text-xs font-semibold text-neutral-400 dark:text-white/30 tracking-widest uppercase mb-3">
+              {result.assignment_title}
+            </p>
+          )}
+
           <div className="flex items-center gap-4 mb-3 flex-wrap">
             <h1 className="text-3xl font-black text-neutral-900 dark:text-white leading-tight">
               <OverallBadge score={result.overall_score} />
@@ -102,6 +108,16 @@ export default function ResultsPage() {
           <p className="text-lg font-semibold text-neutral-700 dark:text-white/80 mb-2 leading-snug">
             {result.overall_headline}
           </p>
+
+          {result.source_note && (
+            <div className="flex items-start gap-2 mb-3 px-3 py-2.5 rounded-lg bg-amber-500/[0.08] border border-amber-500/20">
+              <span className="text-amber-500 dark:text-amber-400 text-xs mt-0.5 flex-shrink-0">◈</span>
+              <p className="text-xs text-amber-700 dark:text-amber-400/80 leading-relaxed">
+                {result.source_note}
+              </p>
+            </div>
+          )}
+
           <p className="text-neutral-500 dark:text-white/50 leading-relaxed text-sm mb-4">
             {result.overall_analysis}
           </p>
