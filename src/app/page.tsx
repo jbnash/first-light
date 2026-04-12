@@ -242,7 +242,7 @@ export default function Home() {
                   ? "bg-amber-500/75 dark:bg-amber-400/60 text-white dark:text-black cursor-wait"
                   : isReady
                     ? "bg-amber-500 dark:bg-amber-400 text-white dark:text-black hover:bg-amber-400 dark:hover:bg-amber-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-amber-500/20 dark:shadow-amber-400/20"
-                    : "bg-neutral-200 dark:bg-white/8 text-neutral-400 dark:text-white/25 cursor-not-allowed"
+                    : "bg-neutral-200 dark:bg-neutral-800 text-neutral-400 dark:text-white/20 cursor-not-allowed"
                 }
               `}
             >
