@@ -190,9 +190,14 @@ export default function Home() {
         <div className="rounded-2xl border border-neutral-200 dark:border-white/8 bg-white dark:bg-white/[0.03] overflow-hidden shadow-sm dark:shadow-2xl">
           {/* Card header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-200 dark:border-white/6">
-            <span className="text-xs font-medium text-neutral-500 dark:text-white/40 tracking-widest uppercase">
-              Assignment Text
-            </span>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-xs font-medium text-neutral-500 dark:text-white/40 tracking-widest uppercase">
+                Assignment Text
+              </span>
+              <span className="text-xs text-neutral-400 dark:text-white/25">
+                One assignment or a full syllabus — we'll focus on the highest-risk one
+              </span>
+            </div>
             <button
               onClick={loadExample}
               className="text-xs text-amber-600 dark:text-amber-400/70 hover:text-amber-500 dark:hover:text-amber-400 transition-colors font-medium"
