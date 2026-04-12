@@ -83,9 +83,9 @@ export default function ResultsPage() {
 
         {/* Overall badge + headline */}
         <div className="mb-8">
-          {result.assignment_title && (
+          {result.overall_headline && (
             <p className="text-xs font-semibold text-neutral-400 dark:text-white/30 tracking-widest uppercase mb-3">
-              {result.assignment_title}
+              {result.overall_headline}
             </p>
           )}
 
@@ -106,7 +106,7 @@ export default function ResultsPage() {
           </div>
 
           <p className="text-lg font-semibold text-neutral-700 dark:text-white/80 mb-2 leading-snug">
-            {result.overall_headline}
+            {result.assignment_title}
           </p>
 
           {result.source_note && (

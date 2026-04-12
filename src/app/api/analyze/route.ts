@@ -46,7 +46,7 @@ Return the insufficient JSON only if the submitted text is obviously not educati
 <multi_assignment_rule>
 If the submitted text contains multiple assignments or is a full course syllabus, identify the single highest-risk assignment and focus your entire analysis on it. Evaluate all five dimensions for that specific assignment. In the overall_analysis, your second sentence must note whether other assignments in the course offset the risk — for example, if another assignment elsewhere in the syllabus adds verification surface, process visibility, or context specificity that partially compensates. The assignment_title must name the specific assignment being analyzed, not the course as a whole.
 
-When multiple assignments are present, set source_note to a plain sentence identifying what you focused on and how many assignments were reviewed. Example: "Identified as highest-risk among 7 assignments. Other assignments were reviewed for course context." When only a single assignment is submitted, set source_note to null.
+When multiple assignments are present, set source_note to a plain sentence identifying what you focused on and how many assignments were reviewed. Example: "This assignment is identified as highest-risk among 7 assignments. Other assignments were reviewed for course context." When only a single assignment is submitted, set source_note to null.
 </multi_assignment_rule>
 
 <critical_concept name="data_vs_cognitive_authenticity">
