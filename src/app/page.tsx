@@ -192,10 +192,10 @@ export default function Home() {
           <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-200 dark:border-white/6">
             <div className="flex flex-col gap-0.5">
               <span className="text-xs font-medium text-neutral-500 dark:text-white/40 tracking-widest uppercase">
-                Assignment Text
+                Paste Assignment Text
               </span>
               <span className="text-xs text-neutral-400 dark:text-white/25">
-                One assignment or a full syllabus — we'll focus on the highest-risk one
+                One assignment or a full syllabus (in which case we'll focus on the highest-risk assignment)
               </span>
             </div>
             <button
