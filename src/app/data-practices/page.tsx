@@ -134,10 +134,10 @@ export default function DataPracticesPage() {
             office needs additional documentation (DPA template, security
             review, FERPA stance), email{" "}
             <a
-              href="mailto:hello@firstlight.app"
+              href="mailto:john@firstlight.solutions"
               className="underline underline-offset-2 hover:text-neutral-800 dark:hover:text-white/80 transition-colors"
             >
-              hello@firstlight.app
+              john@firstlight.solutions
             </a>
             .
           </p>

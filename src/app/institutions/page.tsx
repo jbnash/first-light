@@ -3,8 +3,7 @@
 import { useRouter } from "next/navigation";
 import ThemeToggle from "@/components/ThemeToggle";
 
-// TODO: replace placeholder before going live — see /data-practices for same value.
-const CONTACT_EMAIL = "hello@firstlight.app";
+const CONTACT_EMAIL = "john@firstlight.solutions";
 
 const PILOT_EMAIL_SUBJECT = "First Light pilot — interested";
 const PILOT_EMAIL_BODY = `Hi John,
