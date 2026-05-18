@@ -1,36 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
-
-export interface DimensionResult {
-  score: number;
-  headline: string;
-  analysis: string;
-  signals: string[];
-}
-
-export interface Recommendation {
-  dimension: string;
-  title: string;
-  action: string;
-  difficulty: "easy" | "moderate" | "significant";
-}
-
-export interface AnalysisResult {
-  assignment_title: string;
-  source_note?: string | null;
-  dimensions: {
-    context_specificity: DimensionResult;
-    task_openness: DimensionResult;
-    process_visibility: DimensionResult;
-    output_type: DimensionResult;
-    verification_surface: DimensionResult;
-  };
-  overall_score: number;
-  overall_headline: string;
-  overall_analysis: string;
-  overall_bullets: string[];
-  recommendations: Recommendation[];
-}
+import type { AnalysisResult } from "@/lib/types";
+import { checkRateLimit } from "@/lib/ratelimit";
 
 const SYSTEM_PROMPT = `<role>
 You are an expert in assessment design and AI capabilities in education. You evaluate academic assignments to determine how susceptible they are to being completed by an AI language model without meaningful student engagement.
@@ -39,15 +10,13 @@ Return ONLY a JSON object. No preamble, no markdown, no explanation outside the 
 </role>
 
 <insufficient_input_rule>
-Return the insufficient JSON only if the submitted text is obviously not educational content — for example, random characters, a single unrelated sentence, or something with no connection to a course, assignment, or academic context. Do NOT return insufficient for syllabi, course descriptions, or assignment lists even if individual assignment descriptions are brief. If there is any reasonable basis for analysis, proceed. When in doubt, proceed.
+Return the insufficient JSON only if the submitted text is obviously not educational content — for example, random characters, a single unrelated sentence, or something with no connection to a course, assignment, or academic context. If there is any reasonable basis to analyze the submission as a single assignment, proceed. When in doubt, proceed.
 {"input_quality": "insufficient", "reason": "One sentence explaining what is missing."}
 </insufficient_input_rule>
 
-<multi_assignment_rule>
-If the submitted text contains multiple assignments or is a full course syllabus, identify the single highest-risk assignment and focus your entire analysis on it. Evaluate all five dimensions for that specific assignment. In the overall_analysis, your second sentence must note whether other assignments in the course offset the risk — for example, if another assignment elsewhere in the syllabus adds verification surface, process visibility, or context specificity that partially compensates. The assignment_title must name the specific assignment being analyzed, not the course as a whole.
-
-When multiple assignments are present, set source_note to a plain sentence identifying what you focused on and how many assignments were reviewed. Example: "This assignment is identified as highest-risk among 7 assignments. Other assignments were reviewed for course context." When only a single assignment is submitted, set source_note to null.
-</multi_assignment_rule>
+<single_assignment_rule>
+The input is a single assignment, not a syllabus or course outline. Analyze the submitted text as one assignment and score it on the five dimensions. Do not try to extract or compare multiple assignments. The assignment_title names what the student is being asked to do.
+</single_assignment_rule>
 
 <critical_concept name="data_vs_cognitive_authenticity">
 Fieldwork does not automatically protect an assignment from AI completion. A student can interview a principal, observe a classroom, or collect survey data — and then hand the raw notes to ChatGPT to write the analysis. The data collection step may be authentic. The cognitive transformation step that follows — deciding what the data means, building an argument, writing the analysis — is exactly what a student offloads to an LLM. Ask at every dimension: what is the gap between the raw experience and the final submitted product? Is that transformation step visible to the instructor?
@@ -154,7 +123,6 @@ GOOD (specific to the actual assignment text):
       "signals": ["direct quote from the text", "another direct quote"]
     }
   },
-  "source_note": null,
   "overall_score": [calculated per scoring formula],
   "overall_headline": "Short phrase summarizing the overall finding",
   "overall_analysis": "Exactly 2 sentences. First names the core vulnerability. Second names what is genuinely working.",
@@ -179,6 +147,37 @@ GOOD (specific to the actual assignment text):
 const apiKey = process.env.ANTHROPIC_API_KEY;
 const client = new Anthropic({ apiKey });
 
+// Find the first balanced top-level JSON object in the model's text response.
+// Ignores braces that appear inside string literals. Strips markdown fences
+// before scanning. Throws if no balanced object is found.
+function extractJsonObject(raw: string): string {
+  const stripped = raw.trim().replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/i, "");
+  let depth = 0;
+  let start = -1;
+  let inString = false;
+  let escape = false;
+  for (let i = 0; i < stripped.length; i++) {
+    const ch = stripped[i];
+    if (inString) {
+      if (escape) { escape = false; continue; }
+      if (ch === "\\") { escape = true; continue; }
+      if (ch === '"') inString = false;
+      continue;
+    }
+    if (ch === '"') { inString = true; continue; }
+    if (ch === "{") {
+      if (depth === 0) start = i;
+      depth++;
+    } else if (ch === "}") {
+      depth--;
+      if (depth === 0 && start !== -1) {
+        return stripped.substring(start, i + 1);
+      }
+    }
+  }
+  throw new SyntaxError("No balanced JSON object found in model response");
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { text } = await req.json();
@@ -194,6 +193,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { error: "Please provide at least a few sentences of assignment text." },
         { status: 400 }
+      );
+    }
+
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("x-real-ip") ||
+      "anonymous";
+    const limit = await checkRateLimit(ip);
+    if (!limit.success) {
+      const retryAfter = Math.max(1, Math.ceil((limit.reset - Date.now()) / 1000));
+      return NextResponse.json(
+        { error: "You're analyzing a lot of assignments. Please wait a bit before the next one." },
+        { status: 429, headers: { "Retry-After": String(retryAfter) } }
       );
     }
 
@@ -214,14 +226,7 @@ export async function POST(req: NextRequest) {
       throw new Error("Unexpected response type from API");
     }
 
-    let jsonText = rawContent.text.trim();
-    const firstBrace = jsonText.indexOf("{");
-    const lastBrace = jsonText.lastIndexOf("}");
-    if (firstBrace !== -1 && lastBrace !== -1) {
-      jsonText = jsonText.substring(firstBrace, lastBrace + 1);
-    }
-
-    const parsed = JSON.parse(jsonText);
+    const parsed = JSON.parse(extractJsonObject(rawContent.text));
 
     if (parsed.input_quality === "insufficient") {
       return NextResponse.json(

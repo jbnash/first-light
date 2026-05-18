@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import type { AnalysisResult } from "@/app/api/analyze/route";
+import type { AnalysisResult } from "@/lib/types";
 import ThemeToggle from "@/components/ThemeToggle";
 
 const DIMENSIONS_INFO = [
@@ -38,7 +38,7 @@ const DIMENSIONS_INFO = [
   },
 ];
 
-const PLACEHOLDER = `Example: Paste your assignment prompt, rubric, or syllabus section here.
+const PLACEHOLDER = `Example: Paste one assignment prompt or rubric here.
 
 e.g. "Write a 1000-word argumentative essay on a topic of your choice related to the themes we have discussed in class. Your essay should include a clear thesis, supporting evidence, and a conclusion. Submit via Canvas by Friday at midnight."`;
 
@@ -130,6 +130,12 @@ export default function Home() {
           <span className="font-semibold text-sm tracking-wide text-neutral-800 dark:text-white/90">First Light</span>
         </div>
         <div className="flex items-center gap-3">
+          <a
+            href="/institutions"
+            className="text-xs text-neutral-500 dark:text-white/40 hover:text-neutral-800 dark:hover:text-white/80 transition-colors font-medium"
+          >
+            For institutions
+          </a>
           <ThemeToggle />
           <div className="text-xs text-neutral-400 dark:text-white/30 font-mono">BETA</div>
         </div>
@@ -149,7 +155,7 @@ export default function Home() {
         </h1>
 
         <p className="text-lg text-neutral-500 dark:text-white/50 max-w-lg leading-relaxed text-balance">
-          Paste any assignment prompt or syllabus section. We'll analyze it across five dimensions and give you a specific list of fixes.
+          Paste one assignment prompt. We'll analyze it across five dimensions and give you a specific list of fixes.
         </p>
 
         <button
@@ -195,7 +201,7 @@ export default function Home() {
                 Paste Assignment Text
               </span>
               <span className="text-xs text-neutral-400 dark:text-white/25">
-                One assignment or a full syllabus (in which case we'll focus on the highest-risk assignment)
+                One assignment prompt or rubric &middot; not student submissions
               </span>
             </div>
             <button
@@ -291,7 +297,7 @@ export default function Home() {
             {" "}A low score means the assignment is harder to hand off to an AI.
           </p>
           <p className="text-center text-xs text-neutral-400 dark:text-white/20 leading-relaxed">
-            Nothing you paste is stored · For educational use · © 2026 John Nash · <a href="/evidence" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Research basis</a>
+            First Light keeps no copies of what you paste · For educational use · © 2026 John Nash · <a href="/data-practices" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Data practices</a> · <a href="/evidence" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Research basis</a>
           </p>
         </div>
       </div>

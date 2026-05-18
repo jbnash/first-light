@@ -2,20 +2,13 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import type { AnalysisResult } from "@/app/api/analyze/route";
+import type { AnalysisResult } from "@/lib/types";
+import { DIMENSION_ORDER } from "@/lib/dimensions";
 import ScoreBars from "@/components/ScoreBars";
 import DimensionCard from "@/components/DimensionCard";
 import OverallBadge from "@/components/OverallBadge";
 import PunchList from "@/components/PunchList";
 import ThemeToggle from "@/components/ThemeToggle";
-
-const DIMENSION_ORDER = [
-  "context_specificity",
-  "task_openness",
-  "process_visibility",
-  "output_type",
-  "verification_surface",
-] as const;
 
 export default function ResultsPage() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
@@ -108,15 +101,6 @@ export default function ResultsPage() {
           <p className="text-lg font-semibold text-neutral-700 dark:text-white/80 mb-2 leading-snug">
             {result.assignment_title}
           </p>
-
-          {result.source_note && (
-            <div className="flex items-start gap-2 mb-3 px-3 py-2.5 rounded-lg bg-amber-500/[0.08] border border-amber-500/20">
-              <span className="text-amber-500 dark:text-amber-400 text-xs mt-0.5 flex-shrink-0">◈</span>
-              <p className="text-xs text-amber-700 dark:text-amber-400/80 leading-relaxed">
-                {result.source_note}
-              </p>
-            </div>
-          )}
 
         </div>
 

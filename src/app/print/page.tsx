@@ -2,35 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { AnalysisResult } from "@/app/api/analyze/route";
-
-const DIMENSION_ORDER = [
-  "context_specificity",
-  "task_openness",
-  "process_visibility",
-  "output_type",
-  "verification_surface",
-] as const;
-
-const DIMENSION_LABELS: Record<string, string> = {
-  context_specificity: "Context Specificity",
-  task_openness: "Task Openness",
-  process_visibility: "Process Visibility",
-  output_type: "Output Type",
-  verification_surface: "Verification Surface",
-};
-
-function scoreLabel(score: number) {
-  if (score <= 3) return { label: "Low Concern", color: "text-emerald-700" };
-  if (score <= 7) return { label: "Worth a Look", color: "text-amber-700" };
-  return { label: "High Concern", color: "text-rose-700" };
-}
-
-function difficultyLabel(d: string) {
-  if (d === "easy") return "Easy win";
-  if (d === "moderate") return "Some effort";
-  return "Significant redesign";
-}
+import type { AnalysisResult } from "@/lib/types";
+import { DIMENSION_ORDER, DIMENSION_LABELS, scoreLabel, difficultyLabel } from "@/lib/dimensions";
 
 function getInputPreview(input: string): string {
   const lines = input.split("\n").filter((l) => l.trim().length > 0);
