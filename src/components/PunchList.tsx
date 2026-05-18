@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Recommendation } from "@/app/api/analyze/route";
+import type { Recommendation } from "@/lib/types";
 
 interface PunchListProps {
   recommendations: Recommendation[];

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { DimensionResult } from "@/app/api/analyze/route";
+import type { DimensionResult } from "@/lib/types";
 
 interface DimensionCardProps {
   dimensionKey: string;
