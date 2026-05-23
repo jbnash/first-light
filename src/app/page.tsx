@@ -143,11 +143,6 @@ export default function Home() {
 
       {/* Hero */}
       <div className="relative z-10 flex flex-col items-center pt-20 pb-10 px-6 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/8 text-amber-600 dark:text-amber-400 text-xs font-medium tracking-wider uppercase mb-8">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse-slow"></span>
-          Assessment Design Analysis
-        </div>
-
         <h1 className="text-5xl font-black tracking-tight text-neutral-900 dark:text-white max-w-2xl leading-[1.05] text-balance mb-4">
           How{" "}
           <span className="text-amber-500 dark:text-amber-400">AI-proof</span>{" "}
@@ -220,7 +215,7 @@ export default function Home() {
               onChange={(e) => setText(e.target.value)}
               placeholder={PLACEHOLDER}
               rows={12}
-              className="w-full bg-transparent px-5 py-4 text-sm text-neutral-700 dark:text-white/80 placeholder:text-neutral-400 dark:placeholder:text-white/20 resize-none outline-none leading-relaxed font-mono"
+              className="w-full bg-transparent px-5 py-4 text-sm text-neutral-700 dark:text-white/80 placeholder:text-neutral-400 dark:placeholder:text-white/40 resize-none outline-none leading-relaxed font-mono"
               disabled={loading}
             />
             <div className="absolute bottom-3 right-4 text-xs text-neutral-400 dark:text-white/20 font-mono tabular-nums">
