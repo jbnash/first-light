@@ -193,7 +193,7 @@ export default function InstitutionsPage() {
         </section>
 
         <p className="text-center text-xs text-neutral-400 dark:text-white/20">
-          First Light · For educational use · © 2026 John Nash ·{" "}
+          First Light · For educational use · © 2026 First Light Technology, Inc. ·{" "}
           <a href="/data-practices" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Data practices</a>
           {" · "}
           <a href="/evidence" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Research basis</a>

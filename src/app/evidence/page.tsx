@@ -275,7 +275,7 @@ export default function EvidencePage() {
             </a>
           </p>
           <p className="text-xs text-neutral-400 dark:text-white/15 mt-1">
-            First Light · For educational use · © 2026 John Nash
+            First Light · For educational use · © 2026 First Light Technology, Inc.
           </p>
         </div>
       </div>

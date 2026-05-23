@@ -223,7 +223,7 @@ export default function PrintPage() {
         {/* Footer */}
         <div className="pt-6 border-t border-neutral-200">
           <p className="text-xs text-neutral-400 text-center">
-            First Light · Assessment Analysis Tool · For educational use · © 2026 John Nash
+            First Light · Assessment Analysis Tool · For educational use · © 2026 First Light Technology, Inc.
           </p>
         </div>
       </div>
