@@ -230,6 +230,10 @@ export default function ResultsPage() {
           </a>
         </div>
 
+        <p className="text-center text-sm italic text-neutral-500 dark:text-white/40 mt-6 max-w-md mx-auto leading-relaxed px-4">
+          If this changed how you&rsquo;ll teach an assignment &mdash; even a little &mdash; I&rsquo;d genuinely like to hear about it. <a href="mailto:john@firstlight.solutions" className="underline underline-offset-2 hover:text-neutral-700 dark:hover:text-white/60 transition-colors">john@firstlight.solutions</a>, every message gets a reply.
+        </p>
+
         <p className="text-center text-xs text-neutral-400 dark:text-white/15 mt-6">
           First Light · For educational use · © 2026 First Light Technology, Inc.
         </p>
