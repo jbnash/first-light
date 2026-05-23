@@ -145,7 +145,9 @@ export default function DataPracticesPage() {
 
         <div className="mt-16 pt-6 border-t border-neutral-200 dark:border-white/10">
           <p className="text-center text-xs text-neutral-400 dark:text-white/20">
-            First Light · For educational use · © 2026 First Light Technology, Inc. ·{" "}
+            First Light · For educational use · © 2026 First Light Technology, Inc.
+          </p>
+          <p className="text-center text-xs text-neutral-400 dark:text-white/20 mt-2">
             <a
               href="/evidence"
               className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors"

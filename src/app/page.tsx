@@ -297,7 +297,10 @@ export default function Home() {
             {" "}A low score means the assignment is harder to hand off to an AI.
           </p>
           <p className="text-center text-xs text-neutral-400 dark:text-white/20 leading-relaxed">
-            First Light keeps no copies of what you paste · For educational use · © 2026 First Light Technology, Inc. · <a href="/data-practices" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Data practices</a> · <a href="/evidence" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Research basis</a>
+            First Light keeps no copies of what you paste · For educational use · © 2026 First Light Technology, Inc.
+          </p>
+          <p className="text-center text-xs text-neutral-400 dark:text-white/20 leading-relaxed">
+            <a href="/data-practices" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Data practices</a> · <a href="/evidence" className="underline underline-offset-2 hover:text-neutral-500 dark:hover:text-white/30 transition-colors">Research basis</a>
           </p>
         </div>
       </div>
