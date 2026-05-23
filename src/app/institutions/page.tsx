@@ -176,6 +176,10 @@ export default function InstitutionsPage() {
           </a>
         </section>
 
+        <p className="text-sm italic text-neutral-500 dark:text-white/40 leading-relaxed text-balance mb-12 max-w-xl">
+          This pilot cohort is higher-education-focused. K&ndash;12 and independent schools &mdash; especially those running on Canvas or other major LMS infrastructure &mdash; are welcome to use the homepage tool, and institutional conversations with secondary schools will follow.
+        </p>
+
         <section className="rounded-2xl border border-amber-500/30 bg-amber-500/[0.06] p-8 mb-12">
           <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-3">
             One email starts the conversation.
