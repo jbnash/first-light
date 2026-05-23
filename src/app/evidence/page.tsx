@@ -179,7 +179,7 @@ export default function EvidencePage() {
             Evidence Base for the Five-Dimension Rubric
           </h1>
           <p className="text-neutral-500 dark:text-white/50 text-sm leading-relaxed">
-            A reference document for beta reviewers · First Light Assessment Tool · John Nash, PhD
+            A reference document for beta reviewers · First Light Assessment Tool
           </p>
         </div>
 
@@ -263,18 +263,7 @@ export default function EvidencePage() {
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-xs text-neutral-500 dark:text-white/30">
-            First Light is developed by{" "}
-            <a
-              href="https://linkedin.com/in/jnash"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-neutral-600 dark:text-white/50 underline underline-offset-2 decoration-neutral-300 dark:decoration-white/20 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
-            >
-              John Nash, PhD
-            </a>
-          </p>
-          <p className="text-xs text-neutral-400 dark:text-white/15 mt-1">
+          <p className="text-xs text-neutral-400 dark:text-white/15">
             First Light · For educational use · © 2026 First Light Technology, Inc.
           </p>
         </div>
