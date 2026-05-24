@@ -217,21 +217,9 @@ export default function ResultsPage() {
           </div>
         </div>
 
-        {/* Feedback prompt */}
-        <div className="mt-10 text-center">
-          <a
-            href="https://tally.so/r/kdWB7e"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-neutral-200 dark:border-white/10 text-sm text-neutral-500 dark:text-white/40 hover:text-neutral-800 dark:hover:text-white/70 hover:border-neutral-300 dark:hover:border-white/20 bg-white dark:bg-white/[0.02] transition-colors"
-          >
-            <span>Did this feel accurate?</span>
-            <span className="text-amber-500 dark:text-amber-400">Share feedback →</span>
-          </a>
-        </div>
-
-        <p className="text-center text-sm italic text-neutral-500 dark:text-white/40 mt-6 max-w-md mx-auto leading-relaxed px-4">
-          If this changed how you&rsquo;ll teach an assignment &mdash; even a little &mdash; I&rsquo;d genuinely like to hear about it. <a href="mailto:john@firstlight.solutions" className="underline underline-offset-2 hover:text-neutral-700 dark:hover:text-white/60 transition-colors">john@firstlight.solutions</a>, every message gets a reply.
+        {/* Founder feedback prompt */}
+        <p className="text-center text-base text-neutral-700 dark:text-white/70 mt-10 max-w-xl mx-auto leading-relaxed px-4">
+          If this changed how you&rsquo;ll teach an assignment &mdash; even a little &mdash; I&rsquo;d genuinely like to hear about it. <a href="mailto:john@firstlight.solutions" className="text-amber-600 dark:text-amber-400 underline underline-offset-2 hover:text-amber-700 dark:hover:text-amber-300 transition-colors">john@firstlight.solutions</a>. I read every message and every one gets a reply.
         </p>
 
         <p className="text-center text-xs text-neutral-400 dark:text-white/15 mt-6">
