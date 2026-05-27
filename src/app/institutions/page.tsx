@@ -115,20 +115,20 @@ export default function InstitutionsPage() {
           <div className="rounded-2xl border border-neutral-200 dark:border-white/8 bg-white dark:bg-white/[0.02] p-6">
             <ul className="space-y-4 text-base text-neutral-600 dark:text-white/60 leading-relaxed">
               <li>
-                <strong className="text-neutral-800 dark:text-white/80">Free for the summer.</strong>{" "}
-                May through August 2026. Unlimited use by your institution&rsquo;s faculty.
+                <strong className="text-neutral-800 dark:text-white/80">Free through Fall 2026.</strong>{" "}
+                Pilot runs through the end of the fall semester. Unlimited use by your institution&rsquo;s faculty.
               </li>
               <li>
                 <strong className="text-neutral-800 dark:text-white/80">A 30-minute kickoff call</strong>{" "}
-                to share with your CTL team how it works and what we&rsquo;ve seen so far.
+                scheduled at your convenience. How First Light works, what we&rsquo;ve seen so far, what to expect with your faculty.
               </li>
               <li>
                 <strong className="text-neutral-800 dark:text-white/80">A 30-minute check-in</strong>{" "}
-                mid-summer. What faculty are using it for. What&rsquo;s landing. What&rsquo;s confusing.
+                midway through the pilot. What faculty are using it for. What&rsquo;s landing. What&rsquo;s confusing.
               </li>
               <li>
-                <strong className="text-neutral-800 dark:text-white/80">A conversion conversation in late August.</strong>{" "}
-                Honest discussion about whether this is worth budget for fall, and on what terms. No pressure to convert.
+                <strong className="text-neutral-800 dark:text-white/80">A conversion conversation toward the end of the pilot.</strong>{" "}
+                Honest discussion about whether this is worth budget going forward, and on what terms. No pressure to convert.
               </li>
             </ul>
           </div>
@@ -152,7 +152,7 @@ export default function InstitutionsPage() {
               assignments now, in private, with a specific advisor in their
               pocket. It is not a detector. It does not surveil students. It
               does not require an LMS integration. It is something a CTL can
-              roll out this summer and point to in fall.
+              roll out now and point to throughout the fall.
             </p>
           </div>
         </section>
