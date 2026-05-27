@@ -56,7 +56,8 @@ export default function DataPracticesPage() {
             <li className="flex gap-3">
               <span className="text-amber-500 dark:text-amber-400 flex-shrink-0 mt-1">◈</span>
               <span>
-                Anthropic processes the request and returns the analysis.
+                Your text is sent to Anthropic&rsquo;s API for analysis (not to
+                any other AI vendor). The result returns to your browser.
               </span>
             </li>
             <li className="flex gap-3">
@@ -90,6 +91,10 @@ export default function DataPracticesPage() {
               </span>
             </li>
           </ul>
+          <p className="text-sm text-neutral-500 dark:text-white/40 leading-relaxed mt-4">
+            We update this page when Anthropic&rsquo;s policy changes. The
+            &ldquo;Updated&rdquo; date at the top reflects the last review.
+          </p>
         </section>
 
         <section className="mb-10">
@@ -97,13 +102,17 @@ export default function DataPracticesPage() {
             What First Light keeps
           </h2>
           <p className="text-base text-neutral-600 dark:text-white/60 leading-relaxed mb-3">
-            Nothing on our servers. First Light has no database. We do not log,
-            persist, or save the assignment text you paste or the analysis you
-            receive back.
+            No content on our servers. First Light has no database; the
+            assignment text you paste and the analysis you get back are never
+            stored or logged. The result is held in your browser session so the
+            Results and Print pages can render it. When you close the tab, it
+            is gone.
           </p>
           <p className="text-base text-neutral-600 dark:text-white/60 leading-relaxed">
-            The analysis is held in your browser session so the Results and
-            Print pages can render it. When you close the tab, it is gone.
+            Standard hosting-level analytics (anonymous page visits, load
+            times) are collected by Vercel as the website host. This is
+            operational data only and is not associated with the content you
+            analyze.
           </p>
         </section>
 
@@ -116,6 +125,13 @@ export default function DataPracticesPage() {
             the instructions you give your students. It is not designed to
             analyze student submissions, drafts, or anything else that could
             identify a specific student.
+          </p>
+          <p className="text-base text-neutral-600 dark:text-white/60 leading-relaxed mb-3">
+            We can&rsquo;t technically prevent you from pasting student work;
+            the tool sees text without knowing its origin. The workflow is
+            built around faculty self-discipline and the analysis surface:
+            prompts go in, prompt feedback comes out. A reminder appears at
+            paste time on the homepage.
           </p>
           <p className="text-base text-neutral-600 dark:text-white/60 leading-relaxed">
             If you have a hypothetical example to test against, that&rsquo;s
@@ -131,15 +147,17 @@ export default function DataPracticesPage() {
           </h2>
           <p className="text-base text-neutral-600 dark:text-white/60 leading-relaxed">
             If your Center for Teaching &amp; Learning, IT, or procurement
-            office needs additional documentation (DPA template, security
-            review, FERPA stance), email{" "}
+            office needs additional documentation &mdash; DPA, security
+            questionnaire response, FERPA stance for your specific use case
+            &mdash; email{" "}
             <a
               href="mailto:john@firstlight.solutions"
               className="underline underline-offset-2 hover:text-neutral-800 dark:hover:text-white/80 transition-colors"
             >
               john@firstlight.solutions
             </a>
-            .
+            . Most pilots have proceeded without formal documentation; if
+            yours requires it, we&rsquo;ll prepare what&rsquo;s needed.
           </p>
         </section>
 
