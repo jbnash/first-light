@@ -78,7 +78,7 @@ export default function InstitutionsPage() {
 
         <section className="mb-14">
           <h2 className="text-xs font-semibold text-neutral-400 dark:text-white/30 tracking-widest uppercase mb-4">
-            What faculty get
+            What anyone gets, free
           </h2>
           <ul className="space-y-3 text-base text-neutral-600 dark:text-white/60 leading-relaxed">
             <li className="flex gap-3">
@@ -107,32 +107,48 @@ export default function InstitutionsPage() {
               </span>
             </li>
           </ul>
+          <p className="text-sm text-neutral-500 dark:text-white/40 leading-relaxed mt-4">
+            Available right now at firstlight.solutions. No login, no pilot required, no institutional setup.
+          </p>
         </section>
 
         <section className="mb-14">
           <h2 className="text-xs font-semibold text-neutral-400 dark:text-white/30 tracking-widest uppercase mb-4">
-            Pilot terms
+            What the institutional pilot adds
           </h2>
           <div className="rounded-2xl border border-neutral-200 dark:border-white/8 bg-white dark:bg-white/[0.02] p-6">
             <ul className="space-y-4 text-base text-neutral-600 dark:text-white/60 leading-relaxed">
               <li>
-                <strong className="text-neutral-800 dark:text-white/80">Free through Fall 2026.</strong>{" "}
-                Pilot runs through the end of the fall semester. Unlimited use by your institution&rsquo;s faculty.
+                <strong className="text-neutral-800 dark:text-white/80">A 30-minute kickoff with your CTL team.</strong>{" "}
+                So First Light arrives in your faculty&rsquo;s hands as part of a coordinated institutional response, not a random URL discovery.
               </li>
               <li>
-                <strong className="text-neutral-800 dark:text-white/80">A 30-minute kickoff call</strong>{" "}
-                scheduled at your convenience. How First Light works, what we&rsquo;ve seen so far, what to expect with your faculty.
+                <strong className="text-neutral-800 dark:text-white/80">Direct founder access throughout the pilot.</strong>{" "}
+                A real line of communication for questions, faculty feedback, and the patterns you&rsquo;re noticing on the ground.
               </li>
               <li>
-                <strong className="text-neutral-800 dark:text-white/80">A 30-minute check-in</strong>{" "}
-                midway through the pilot. What faculty are using it for. What&rsquo;s landing. What&rsquo;s confusing.
+                <strong className="text-neutral-800 dark:text-white/80">A 30-minute check-in midway through the pilot.</strong>{" "}
+                What your faculty are running through it. What&rsquo;s landing. What&rsquo;s confusing.
               </li>
               <li>
-                <strong className="text-neutral-800 dark:text-white/80">A conversion conversation toward the end of the pilot.</strong>{" "}
-                Honest discussion about whether this is worth budget going forward, and on what terms. Straightforward conversion if it works; clean exit if it doesn&rsquo;t.
+                <strong className="text-neutral-800 dark:text-white/80">An end-of-pilot debrief and conversion conversation.</strong>{" "}
+                A concrete reference point to take to your provost &mdash; what we piloted, what we learned, what to decide for spring &mdash; plus an honest discussion of whether continued use is worth budget. Straightforward conversion if it works; clean exit if it doesn&rsquo;t.
+              </li>
+              <li>
+                <strong className="text-neutral-800 dark:text-white/80">Cohort learning, when relevant.</strong>{" "}
+                With your consent, anonymized patterns from other pilot institutions &mdash; learning you can&rsquo;t get from solo use of the tool.
               </li>
             </ul>
           </div>
+        </section>
+
+        <section className="mb-14">
+          <h2 className="text-xs font-semibold text-neutral-400 dark:text-white/30 tracking-widest uppercase mb-4">
+            Pilot logistics
+          </h2>
+          <p className="text-base text-neutral-600 dark:text-white/60 leading-relaxed">
+            Free through Fall 2026, running through the end of the fall semester. Unlimited use by your institution&rsquo;s faculty during the pilot. Your time commitment: about an hour across the kickoff and check-in.
+          </p>
         </section>
 
         <section className="mb-14">
