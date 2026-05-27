@@ -59,7 +59,7 @@ export default function InstitutionsPage() {
         </h1>
 
         <p className="text-lg text-neutral-500 dark:text-white/50 max-w-xl leading-relaxed text-balance mb-10">
-          Most universities have not set an AI policy. Faculty are improvising in private and getting it wrong in public. First Light is the defensible institutional response your CTL can put in faculty hands now, while the policy work catches up.
+          Most universities have not set an AI policy. Faculty are improvising in private and getting it wrong in public. First Light is a defensible institutional response your CTL can put in faculty hands now, while the policy work catches up.
         </p>
 
         <a
@@ -95,7 +95,8 @@ export default function InstitutionsPage() {
               <span>
                 A specific punch list of revisions. Not generic advice. Each
                 recommendation names a part of the assignment by phrase and
-                explains exactly why ChatGPT cannot do the proposed step.
+                explains exactly why an LLM cannot fluently produce the
+                proposed step, given current model capabilities.
               </span>
             </li>
             <li className="flex gap-3">
@@ -128,7 +129,7 @@ export default function InstitutionsPage() {
               </li>
               <li>
                 <strong className="text-neutral-800 dark:text-white/80">A conversion conversation toward the end of the pilot.</strong>{" "}
-                Honest discussion about whether this is worth budget going forward, and on what terms. No pressure to convert.
+                Honest discussion about whether this is worth budget going forward, and on what terms. Straightforward conversion if it works; clean exit if it doesn&rsquo;t.
               </li>
             </ul>
           </div>
@@ -165,8 +166,10 @@ export default function InstitutionsPage() {
             Assignment text is sent to Anthropic&rsquo;s API for analysis.
             Anthropic deletes API inputs and outputs after seven days and does
             not use them for model training. First Light keeps no copies on
-            our servers. Faculty are explicitly asked not to paste student
-            work.
+            our servers. Faculty see an explicit reminder at paste time not
+            to submit student work; we don&rsquo;t enforce this technically,
+            and the workflow is designed around analyzing assignment prompts,
+            not student submissions.
           </p>
           <a
             href="/data-practices"
@@ -185,7 +188,7 @@ export default function InstitutionsPage() {
             One email starts the conversation.
           </h2>
           <p className="text-base text-neutral-600 dark:text-white/60 leading-relaxed mb-5">
-            If your CTL is wrestling with AI in coursework right now, write three sentences and we&rsquo;ll find time. Pilots are first-come.
+            If your CTL is wrestling with AI in coursework right now, write three sentences and we&rsquo;ll find time.
           </p>
           <a
             href={mailtoHref}
