@@ -12,8 +12,16 @@ export interface Recommendation {
   difficulty: "easy" | "moderate" | "significant";
 }
 
+export interface AssignmentProfile {
+  genre: string;
+  purpose: string;
+  inferred_stakes: string;
+  sound_for_purpose: string;
+}
+
 export interface AnalysisResult {
   assignment_title: string;
+  assignment_profile?: AssignmentProfile;
   dimensions: {
     context_specificity: DimensionResult;
     task_openness: DimensionResult;
