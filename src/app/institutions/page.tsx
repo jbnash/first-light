@@ -5,7 +5,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 
 const CONTACT_EMAIL = "john@firstlight.solutions";
 
-const PILOT_EMAIL_SUBJECT = "First Light pilot — interested";
+const PILOT_EMAIL_SUBJECT = "First Light pilot: interested";
 const PILOT_EMAIL_BODY = `Hi John,
 
 I'd like to talk about a First Light pilot at our institution. A few quick details:
@@ -123,8 +123,8 @@ export default function InstitutionsPage() {
                 So First Light arrives in your faculty&rsquo;s hands as part of a coordinated institutional response, not a random URL discovery.
               </li>
               <li>
-                <strong className="text-neutral-800 dark:text-white/80">Direct founder access throughout the pilot.</strong>{" "}
-                A real line of communication for questions, faculty feedback, and the patterns you&rsquo;re noticing on the ground.
+                <strong className="text-neutral-800 dark:text-white/80">Direct access to the faculty member who built it.</strong>{" "}
+                Not a support queue. A real line to the person designing the tool, for questions, faculty feedback, and the patterns you&rsquo;re seeing on the ground.
               </li>
               <li>
                 <strong className="text-neutral-800 dark:text-white/80">A 30-minute check-in midway through the pilot.</strong>{" "}
@@ -132,14 +132,28 @@ export default function InstitutionsPage() {
               </li>
               <li>
                 <strong className="text-neutral-800 dark:text-white/80">An end-of-pilot debrief and conversion conversation.</strong>{" "}
-                A concrete reference point to take to your provost &mdash; what we piloted, what we learned, what to decide for spring &mdash; plus an honest discussion of whether continued use is worth budget. Straightforward conversion if it works; clean exit if it doesn&rsquo;t.
+                A concrete reference point to take to your provost, covering what we piloted, what we learned, and what to decide for spring, plus an honest discussion of whether continued use is worth budget. Straightforward conversion if it works; clean exit if it doesn&rsquo;t.
               </li>
               <li>
                 <strong className="text-neutral-800 dark:text-white/80">Cohort learning, when relevant.</strong>{" "}
-                With your consent, anonymized patterns from other pilot institutions &mdash; learning you can&rsquo;t get from solo use of the tool.
+                With your consent, anonymized patterns from other pilot institutions, learning you can&rsquo;t get from solo use of the tool.
               </li>
             </ul>
           </div>
+        </section>
+
+        <section className="mb-14">
+          <h2 className="text-xs font-semibold text-neutral-400 dark:text-white/30 tracking-widest uppercase mb-4">
+            Who&rsquo;s behind First Light
+          </h2>
+          <p className="text-base text-neutral-600 dark:text-white/60 leading-relaxed">
+            First Light is built by John Nash, a faculty member and
+            researcher focused on applied AI use in education. It comes out of
+            the same problem your faculty are facing: assignments that no
+            longer hold up under AI. It is designed by someone working that
+            question directly, not a vendor selling into education from the
+            outside.
+          </p>
         </section>
 
         <section className="mb-14">
@@ -159,7 +173,7 @@ export default function InstitutionsPage() {
             <p>
               Three things are converging on CTL directors right now. Faculty
               are losing trust in their own assignments and asking for help.
-              AI-detector tools have collapsed as a defense — the false
+              AI-detector tools have collapsed as a defense. The false
               positives are damaging student relationships. And provosts are
               asking what the institution is doing about AI in coursework, but
               the formal policy work is months or years out.
@@ -196,7 +210,7 @@ export default function InstitutionsPage() {
         </section>
 
         <p className="text-sm italic text-neutral-500 dark:text-white/40 leading-relaxed text-balance mb-12 max-w-xl">
-          This pilot cohort is higher-education-focused. K&ndash;12 and independent schools &mdash; especially those running on Canvas or other major LMS infrastructure &mdash; are welcome to use the homepage tool, and institutional conversations with secondary schools will follow.
+          This pilot cohort is higher-education-focused. K-12 and independent schools, especially those running on Canvas or other major LMS infrastructure, are welcome to use the homepage tool, and institutional conversations with secondary schools will follow.
         </p>
 
         <section className="rounded-2xl border border-amber-500/30 bg-amber-500/[0.06] p-8 mb-12">
