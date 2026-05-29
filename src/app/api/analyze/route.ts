@@ -6,12 +6,11 @@ import { checkRateLimit } from "@/lib/ratelimit";
 const SYSTEM_PROMPT = `<role>
 You are an expert in assessment design and AI capabilities in education. You evaluate academic assignments to determine how susceptible they are to being completed by an AI language model without meaningful student engagement.
 
-Return ONLY a JSON object. No preamble, no markdown, no explanation outside the JSON.
+Report your analysis by calling the report_analysis tool. Do not write any prose outside the tool call.
 </role>
 
 <insufficient_input_rule>
-Return the insufficient JSON only if the submitted text is obviously not educational content — for example, random characters, a single unrelated sentence, or something with no connection to a course, assignment, or academic context. If there is any reasonable basis to analyze the submission as a single assignment, proceed. When in doubt, proceed.
-{"input_quality": "insufficient", "reason": "One sentence explaining what is missing."}
+Call the report_insufficient tool ONLY if the submitted text is obviously not educational content — for example, random characters, a single unrelated sentence, or something with no connection to a course, assignment, or academic context. If there is any reasonable basis to analyze the submission as a single assignment, call report_analysis instead. When in doubt, call report_analysis.
 </insufficient_input_rule>
 
 <single_assignment_rule>
@@ -69,7 +68,7 @@ GOOD: "written report submitted to Canvas with no debrief or follow-up requireme
 </signals_rules>
 
 <assignment_profile_rule>
-Before recommending anything, determine the assignment's genre and pedagogical purpose and emit them in the assignment_profile object. This profile governs which recommendations are legitimate.
+Before recommending anything, determine the assignment's genre and pedagogical purpose and set the genre, purpose, inferred_stakes, and sound_for_purpose fields. This profile governs which recommendations are legitimate.
 
 genre — the kind of work the student produces. One of: personal_reflection (first-person writing drawn from the student's own memory, experience, or values), analytic_essay, research_paper, lab_or_technical_report, fieldwork_writeup, problem_set, discussion_post, creative, other.
 
@@ -112,102 +111,163 @@ GOOD (specific to the actual assignment text):
 }
 </recommendation_rules>
 
-<output_schema>
-{
-  "assignment_title": "6–10 word title derived from the submitted text",
-  "assignment_profile": {
-    "genre": "one genre key from assignment_profile_rule",
-    "purpose": "one short phrase naming what the assignment is pedagogically for",
-    "inferred_stakes": "low | moderate | high — followed by the cue you used",
-    "sound_for_purpose": "one sentence: setting AI-susceptibility aside, is this assignment sound for its stated purpose?"
-  },
-  "dimensions": {
-    "context_specificity": {
-      "score": [1–10],
-      "headline": "Short phrase naming the key finding",
-      "analysis": "2–3 sentences naming the specific feature and stating the consequence for AI susceptibility directly.",
-      "signals": ["direct quote or close paraphrase from the text", "another direct quote or close paraphrase"]
-    },
-    "task_openness": {
-      "score": [1–10],
-      "headline": "Short phrase naming the key finding",
-      "analysis": "2–3 sentences.",
-      "signals": ["direct quote from the text", "another direct quote"]
-    },
-    "process_visibility": {
-      "score": [1–10],
-      "headline": "Short phrase naming the key finding",
-      "analysis": "2–3 sentences. Must name the specific cognitive transformation step and use the word offload or offloading.",
-      "signals": ["direct quote from the text", "another direct quote"]
-    },
-    "output_type": {
-      "score": [1–10],
-      "headline": "Short phrase naming the key finding",
-      "analysis": "2–3 sentences.",
-      "signals": ["direct quote from the text", "another direct quote"]
-    },
-    "verification_surface": {
-      "score": [1–10],
-      "headline": "Short phrase naming the key finding",
-      "analysis": "2–3 sentences.",
-      "signals": ["direct quote from the text", "another direct quote"]
-    }
-  },
-  "overall_score": [calculated per scoring formula],
-  "overall_headline": "Short phrase summarizing the overall finding",
-  "overall_analysis": "Exactly 2 sentences. First names the core vulnerability. Second names what is genuinely working.",
-  "overall_bullets": [
-    "Dimension Name (score/10): one sentence on key risk or strength.",
-    "Dimension Name (score/10): one sentence on key risk or strength.",
-    "Dimension Name (score/10): one sentence on key risk or strength.",
-    "Dimension Name (score/10): one sentence on key risk or strength.",
-    "Dimension Name (score/10): one sentence on key risk or strength."
-  ],
-  "recommendations": [
-    {
-      "dimension": "dimension_key",
-      "title": "Specific title naming the actual assignment",
-      "action": "Exactly what to add or change, and why ChatGPT cannot complete that step.",
-      "difficulty": "easy | moderate | significant"
-    }
-  ]
-}
-</output_schema>
+<output_fields>
+Report every field below as a separate top-level argument to report_analysis. Do NOT nest them inside objects and do NOT serialize any value as a JSON string — pass arrays and numbers as real arrays and numbers.
+
+- assignment_title: 6–10 word title derived from the submitted text.
+- genre: one genre key from assignment_profile_rule.
+- purpose: one short phrase naming what the assignment is pedagogically for.
+- inferred_stakes: "low | moderate | high" followed by the cue you used.
+- sound_for_purpose: one sentence — setting AI-susceptibility aside, is this assignment sound for its stated purpose?
+
+For each of the five dimensions, report four fields, prefixed by the dimension key (context_specificity, task_openness, process_visibility, output_type, verification_surface):
+- {dimension}_score: integer 1–10.
+- {dimension}_headline: short phrase naming the key finding.
+- {dimension}_analysis: 2–3 sentences naming the specific feature and stating the consequence for AI susceptibility directly. For process_visibility, name the specific cognitive transformation step and use the word offload or offloading.
+- {dimension}_signals: array of 2–3 direct quotes or close paraphrases from the text.
+
+- overall_score: calculated per the scoring formula.
+- overall_headline: short phrase summarizing the overall finding.
+- overall_analysis: exactly 2 sentences. First names the core vulnerability. Second names what is genuinely working.
+- overall_bullets: array of exactly five strings, one per dimension, ordered highest score first. Format: "Dimension Name (score/10): one sentence on key risk or strength."
+- recommendations: array of objects, each { dimension, title, action, difficulty }. Up to 5, only those that genuinely fit. Do not pad.
+</output_fields>
 
 `;
 
 const apiKey = process.env.ANTHROPIC_API_KEY;
 const client = new Anthropic({ apiKey });
 
-// Find the first balanced top-level JSON object in the model's text response.
-// Ignores braces that appear inside string literals. Strips markdown fences
-// before scanning. Throws if no balanced object is found.
-function extractJsonObject(raw: string): string {
-  const stripped = raw.trim().replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/i, "");
-  let depth = 0;
-  let start = -1;
-  let inString = false;
-  let escape = false;
-  for (let i = 0; i < stripped.length; i++) {
-    const ch = stripped[i];
-    if (inString) {
-      if (escape) { escape = false; continue; }
-      if (ch === "\\") { escape = true; continue; }
-      if (ch === '"') inString = false;
-      continue;
-    }
-    if (ch === '"') { inString = true; continue; }
-    if (ch === "{") {
-      if (depth === 0) start = i;
-      depth++;
-    } else if (ch === "}") {
-      depth--;
-      if (depth === 0 && start !== -1) {
-        return stripped.substring(start, i + 1);
+const DIM_KEYS = [
+  "context_specificity",
+  "task_openness",
+  "process_visibility",
+  "output_type",
+  "verification_surface",
+] as const;
+
+// The tool schema is fully flattened to scalar top-level fields. Haiku
+// intermittently serializes nested objects as stringified (and badly escaped,
+// unparseable) JSON blobs; a flat schema removes every nested object it could
+// stringify. The nested AnalysisResult shape is reassembled server-side.
+const flatDimensionProps: Record<string, unknown> = {};
+const flatDimensionRequired: string[] = [];
+for (const d of DIM_KEYS) {
+  flatDimensionProps[`${d}_score`] = { type: "integer", minimum: 1, maximum: 10 };
+  flatDimensionProps[`${d}_headline`] = { type: "string", description: "Short phrase naming the key finding" };
+  flatDimensionProps[`${d}_analysis`] = { type: "string", description: "2–3 sentences naming the specific feature and stating the consequence for AI susceptibility directly." };
+  flatDimensionProps[`${d}_signals`] = {
+    type: "array",
+    items: { type: "string" },
+    description: "2–3 direct quotes or close paraphrases from the submitted text, in the assignment's own words.",
+  };
+  flatDimensionRequired.push(`${d}_score`, `${d}_headline`, `${d}_analysis`, `${d}_signals`);
+}
+
+const ANALYSIS_TOOL: Anthropic.Tool = {
+  name: "report_analysis",
+  description: "Report the structured analysis of the assignment. Use this for any submission that can reasonably be read as a single assignment.",
+  input_schema: {
+    type: "object",
+    properties: {
+      assignment_title: { type: "string", description: "6–10 word title derived from the submitted text" },
+      genre: { type: "string", description: "one of: personal_reflection, analytic_essay, research_paper, lab_or_technical_report, fieldwork_writeup, problem_set, discussion_post, creative, other" },
+      purpose: { type: "string", description: "one short phrase naming what the assignment is pedagogically for" },
+      inferred_stakes: { type: "string", description: "low | moderate | high — followed by the cue you used" },
+      sound_for_purpose: { type: "string", description: "one sentence: setting AI-susceptibility aside, is this assignment sound for its stated purpose?" },
+      ...flatDimensionProps,
+      overall_score: { type: "number", description: "Weighted average per the scoring formula, rounded to one decimal." },
+      overall_headline: { type: "string" },
+      overall_analysis: { type: "string", description: "Exactly 2 sentences. First names the core vulnerability. Second names what is genuinely working." },
+      overall_bullets: {
+        type: "array",
+        items: { type: "string" },
+        description: "Exactly one string per dimension — all five — ordered highest score first. Format: 'Dimension Name (score/10): one sentence.'",
+      },
+      recommendations: {
+        type: "array",
+        description: "Up to 5, only those that genuinely fit the genre and purpose. Do not pad.",
+        items: {
+          type: "object",
+          properties: {
+            dimension: { type: "string" },
+            title: { type: "string" },
+            action: { type: "string" },
+            difficulty: { type: "string", enum: ["easy", "moderate", "significant"] },
+          },
+          required: ["dimension", "title", "action", "difficulty"],
+        },
+      },
+    },
+    required: [
+      "assignment_title",
+      "genre",
+      "purpose",
+      "inferred_stakes",
+      "sound_for_purpose",
+      ...flatDimensionRequired,
+      "overall_score",
+      "overall_headline",
+      "overall_analysis",
+      "overall_bullets",
+      "recommendations",
+    ],
+  },
+};
+
+const INSUFFICIENT_TOOL: Anthropic.Tool = {
+  name: "report_insufficient",
+  description: "Use ONLY if the submission is obviously not educational content (random characters, a single unrelated sentence, nothing analyzable as an assignment). When in doubt, use report_analysis instead.",
+  input_schema: {
+    type: "object",
+    properties: {
+      reason: { type: "string", description: "One sentence explaining what is missing." },
+    },
+    required: ["reason"],
+  },
+};
+
+// Reassemble the nested AnalysisResult the frontend expects from the flat tool
+// input. Arrays are defensively parsed in case Haiku still stringifies one.
+function reassembleResult(input: Record<string, unknown>): AnalysisResult {
+  const asArray = (value: unknown): unknown[] => {
+    if (Array.isArray(value)) return value;
+    if (typeof value === "string") {
+      try {
+        const parsed = JSON.parse(value);
+        if (Array.isArray(parsed)) return parsed;
+      } catch {
+        /* fall through */
       }
     }
+    return [];
+  };
+
+  const dimensions = {} as AnalysisResult["dimensions"];
+  for (const d of DIM_KEYS) {
+    dimensions[d] = {
+      score: input[`${d}_score`] as number,
+      headline: input[`${d}_headline`] as string,
+      analysis: input[`${d}_analysis`] as string,
+      signals: asArray(input[`${d}_signals`]) as string[],
+    };
   }
-  throw new SyntaxError("No balanced JSON object found in model response");
+
+  return {
+    assignment_title: input.assignment_title as string,
+    assignment_profile: {
+      genre: input.genre as string,
+      purpose: input.purpose as string,
+      inferred_stakes: input.inferred_stakes as string,
+      sound_for_purpose: input.sound_for_purpose as string,
+    },
+    dimensions,
+    overall_score: input.overall_score as number,
+    overall_headline: input.overall_headline as string,
+    overall_analysis: input.overall_analysis as string,
+    overall_bullets: asArray(input.overall_bullets) as string[],
+    recommendations: asArray(input.recommendations) as AnalysisResult["recommendations"],
+  };
 }
 
 export async function POST(req: NextRequest) {
@@ -243,8 +303,10 @@ export async function POST(req: NextRequest) {
 
     const message = await client.messages.create({
       model: "claude-haiku-4-5",
-      max_tokens: 4096,
+      max_tokens: 8192,
       system: SYSTEM_PROMPT,
+      tools: [ANALYSIS_TOOL, INSUFFICIENT_TOOL],
+      tool_choice: { type: "any" },
       messages: [
         {
           role: "user",
@@ -253,21 +315,20 @@ export async function POST(req: NextRequest) {
       ],
     });
 
-    const rawContent = message.content[0];
-    if (rawContent.type !== "text") {
-      throw new Error("Unexpected response type from API");
+    const toolUse = message.content.find((block) => block.type === "tool_use");
+    if (!toolUse || toolUse.type !== "tool_use") {
+      throw new Error("Model did not return a tool call");
     }
 
-    const parsed = JSON.parse(extractJsonObject(rawContent.text));
-
-    if (parsed.input_quality === "insufficient") {
+    if (toolUse.name === "report_insufficient") {
+      const reason = (toolUse.input as { reason?: string }).reason;
       return NextResponse.json(
-        { error: parsed.reason ?? "The submitted text does not contain enough detail to analyze. Please paste the full assignment description." },
+        { error: reason ?? "The submitted text does not contain enough detail to analyze. Please paste the full assignment description." },
         { status: 400 }
       );
     }
 
-    const result = parsed as AnalysisResult;
+    const result = reassembleResult(toolUse.input as Record<string, unknown>);
 
     return NextResponse.json(result);
   } catch (err) {
