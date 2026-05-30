@@ -2,9 +2,14 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 
 // Fail-open if Upstash isn't configured (local dev, preview deploys without env).
-// In production set UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN.
-const url = process.env.UPSTASH_REDIS_REST_URL;
-const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+// Vercel's Upstash integration injects vars under an UPSTASH_REDIS_KV_* prefix
+// (the "UPSTASH_REDIS" custom prefix set when connecting the database, stacked
+// on Upstash's own KV_* suffixes). Fall back to the canonical names so a
+// hand-set .env still works locally.
+const url =
+  process.env.UPSTASH_REDIS_KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
+const token =
+  process.env.UPSTASH_REDIS_KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
 
 export const ratelimit = url && token
   ? new Ratelimit({
