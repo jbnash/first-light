@@ -47,15 +47,18 @@ const EXAMPLE_SHORT = `Write a 5-page research paper arguing a position on a soc
 const PROGRESS_MESSAGES = [
   "Reading carefully...",
   "Thinking this through...",
+  "Holding it up to the light...",
   "Looking at this from a few angles...",
   "Thinking like a student with an 11pm deadline...",
+  "Wondering what a crafty student would try...",
   "Asking if ChatGPT would enjoy this assignment...",
   "Running the rubric...",
-  "Almost there...",
-  "One more pass...",
+  "Channeling a slightly skeptical TA...",
   "Doing the math on this one...",
   "Weighing the evidence...",
   "Cross-referencing the five dimensions...",
+  "One more pass...",
+  "Almost there...",
 ];
 
 export default function Home() {

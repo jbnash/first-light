@@ -32,3 +32,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# research corpus (local only — copyrighted PDFs, extracts, calibration)
+/research/

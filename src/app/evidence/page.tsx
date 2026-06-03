@@ -10,19 +10,14 @@ const DIMENSIONS = [
     question: "Does the assignment require knowledge only a specific student in a specific course could plausibly have?",
     rows: [
       {
-        source: "Impey et al. (2024)",
+        source: "Paustian & Slinger (2024)",
         finding:
-          "Context-specific and visual tasks remain harder for LLMs; assignments with low requirements for personal data or local context were consistently more susceptible.",
+          "On a specialized, course-specific prompt, generic LLM output scored well below genuine student work (~55% vs ~80%) — direct evidence that course-bound grounding measurably degrades AI completion quality.",
       },
       {
-        source: "Fagbohun et al. (2024)",
+        source: "Bernabei et al. (2023)",
         finding:
-          "Required originality is a key vulnerability factor — when assignments don't demand personal data or context, LLMs complete them at passing quality with minimal effort.",
-      },
-      {
-        source: "Shepherd (2025)",
-        finding:
-          "LLMs perform poorly when tasks require nuanced, course-specific knowledge; assignments relying on shallow or generic content are most easily completed.",
+          "LLMs produced fluent generic description but failed on distinctions taught in specific lectures; assignments bound to course-provided material resist generic AI completion.",
       },
     ],
   },
@@ -88,14 +83,9 @@ const DIMENSIONS = [
           "Generic written outputs and content-based question formats were the most susceptible; visual, local, or discipline-specific outputs showed lower risk.",
       },
       {
-        source: "Bernik et al. (2025)",
+        source: "Shepherd (2025)",
         finding:
-          "Standard programming assignments without runtime verification are effectively indistinguishable from LLM output.",
-      },
-      {
-        source: "Chiang et al. (2024)",
-        finding:
-          "LLMs can evaluate and generate responses to typical assignment formats at a level comparable to human graders.",
+          "Unsupervised text deliverables — essays, reports, projects — align directly with current LLM strengths and carry the highest structural exposure; live, oral, and practical formats carry the lowest.",
       },
     ],
   },
@@ -116,9 +106,9 @@ const DIMENSIONS = [
           "Verification burden — the difficulty instructors face in checking whether work reflects genuine learning — is a primary driver of LLM misuse risk, independent of content difficulty.",
       },
       {
-        source: "Pudasaini et al. (2024) / Gooch et al. (2024) / Nikolovski et al. (2025)",
+        source: "Paustian & Slinger (2024) / Pudasaini et al. (2024)",
         finding:
-          "AI detection tools carry non-trivial error rates (~88% accuracy at best), making detector-only verification structurally insufficient.",
+          "AI-text detectors identify roughly 88% of cases correctly on clean text, but accuracy collapses toward single digits after light paraphrasing and carries high false-positive rates on genuine student writing — so detector-only verification is structurally insufficient.",
       },
       {
         source: "Lodge et al. (2023)",
@@ -131,13 +121,10 @@ const DIMENSIONS = [
 
 const REFERENCES = [
   "Bernabei, M., Colabianchi, S., Falegnami, A., & Costantino, F. (2023). Students' use of large language models in engineering education. Computers and Education: Artificial Intelligence, 5, 100172.",
-  "Bernik, A., Radošević, D., & Čep, A. (2025). A comparative study of large language models in programming education. Applied Sciences.",
-  "Chiang, C., Chen, W., Kuan, C., Yang, C., & Lee, H. (2024). Large language model as an assignment evaluator. arXiv.",
   "Fagbohun, O., Iduwe, N., Abdullahi, M., Ifaturoti, A., & Nwanna, O. (2024). Beyond traditional assessment: Exploring the impact of large language models on grading practices. Journal of Artificial Intelligence, Machine Learning and Data Science.",
   "Gooch, D., Waugh, K., Richards, M., Slaymaker, M., & Woodthorpe, J. (2024). Exploring the profile of university assessments flagged as containing AI-generated material. ACM Inroads, 15, 39–47.",
   "Impey, C., Wenger, M., Garuda, N., Golchin, S., & Stamer, S. (2024). Using large language models for automated grading of student writing about science. International Journal of Artificial Intelligence in Education, 35, 1825–1859.",
   "Lodge, J. M., Thompson, K., & Corrin, L. (2023). Mapping the implications of generative artificial intelligence for academic integrity. Australasian Journal of Educational Technology.",
-  "Nikolovski, V., Trajanov, D., & Chorbev, I. (2025). Advancing AI in higher education. Algorithms, 18, 144.",
   "Paustian, T., & Slinger, B. (2024). Students are using large language models and AI detectors can often detect their use. Frontiers in Education.",
   "Policar, P., Špendl, M., Curk, T., & Zupan, B. (2025). Automated assignment grading with large language models. Bioinformatics, 41, i21–i29.",
   "Pudasaini, S., Miralles-Pechuán, L., Lillis, D., & Salvador, M. (2024). Survey on AI-generated plagiarism detection. Journal of Academic Ethics, 23, 1137–1170.",
@@ -193,6 +180,16 @@ export default function EvidencePage() {
             is organized around five dimensions grounded in peer-reviewed research. The central question
             is not &ldquo;can an LLM do this?&rdquo; but: does this assignment create conditions where
             LLM output is indistinguishable from student learning? (Lodge et al., 2023).
+          </p>
+          <p className="text-sm text-neutral-600 dark:text-white/60 leading-relaxed mt-4">
+            Two notes on method. First, Context Specificity and Verification Surface are weighted more
+            heavily (1.5&times;) than the other three dimensions. That weighting reflects our product
+            judgment about what most determines real-world AI exposure — the ability of an outsider to
+            produce the work, and the instructor&rsquo;s ability to verify authorship — rather than a
+            ratio derived from the literature. Second, several studies in this field measure how well an
+            LLM can <em>grade</em> student work rather than how susceptible an assignment is to being
+            <em> completed</em> by AI. We treat those as useful background on LLM capability, not as a
+            scoring basis, and have kept them out of the dimension evidence below.
           </p>
         </div>
 
