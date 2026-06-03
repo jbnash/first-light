@@ -12,7 +12,7 @@ const DIMENSIONS = [
       {
         source: "Paustian & Slinger (2024)",
         finding:
-          "On a specialized, course-specific prompt, generic LLM output scored well below genuine student work (~55% vs ~80%) — direct evidence that course-bound grounding measurably degrades AI completion quality.",
+          "On a specialized, course-specific prompt, generic LLM output scored well below genuine student work (~55% vs ~80%), direct evidence that course-bound grounding measurably degrades AI completion quality.",
       },
       {
         source: "Bernabei et al. (2023)",
@@ -47,7 +47,7 @@ const DIMENSIONS = [
     number: 3,
     name: "Process Visibility",
     question:
-      "Are there mechanisms that make the student's learning process visible — drafts, reflections, oral defenses, iteration?",
+      "Are there mechanisms that make the student's learning process visible, such as drafts, reflections, oral defenses, or iteration?",
     rows: [
       {
         source: "Saltan (2025)",
@@ -80,7 +80,7 @@ const DIMENSIONS = [
       {
         source: "Shepherd (2025)",
         finding:
-          "Unsupervised text deliverables — essays, reports, projects — align directly with current LLM strengths and carry the highest structural exposure; live, oral, and practical formats carry the lowest.",
+          "Unsupervised text deliverables (essays, reports, projects) align directly with current LLM strengths and carry the highest structural exposure; live, oral, and practical formats carry the lowest.",
       },
       {
         source: "Bernabei et al. (2023)",
@@ -108,7 +108,7 @@ const DIMENSIONS = [
       {
         source: "Perkins et al. (2024)",
         finding:
-          "Simple paraphrasing and adversarial edits reliably bypass detectors, which also carry high false-positive rates for non-native writers — making detector-only verification structurally insufficient.",
+          "Simple paraphrasing and adversarial edits reliably bypass detectors, which also carry high false-positive rates for non-native writers, making detector-only verification structurally insufficient.",
       },
       {
         source: "Lodge et al. (2023)",
@@ -185,14 +185,10 @@ export default function EvidencePage() {
             LLM output is indistinguishable from student learning? (Lodge et al., 2023).
           </p>
           <p className="text-sm text-neutral-600 dark:text-white/60 leading-relaxed mt-4">
-            Two notes on method. First, Context Specificity and Verification Surface are weighted more
-            heavily (1.5&times;) than the other three dimensions. That weighting reflects our product
-            judgment about what most determines real-world AI exposure — the ability of an outsider to
-            produce the work, and the instructor&rsquo;s ability to verify authorship — rather than a
-            ratio derived from the literature. Second, several studies in this field measure how well an
-            LLM can <em>grade</em> student work rather than how susceptible an assignment is to being
-            <em> completed</em> by AI. We treat those as useful background on LLM capability, not as a
-            scoring basis, and have kept them out of the dimension evidence below.
+            A note on method: several studies in this field measure how well an LLM can <em>grade</em>{" "}
+            student work rather than how susceptible an assignment is to being <em>completed</em> by AI.
+            We treat those as useful background on LLM capability, not as a scoring basis, and have kept
+            them out of the dimension evidence below.
           </p>
         </div>
 
