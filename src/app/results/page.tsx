@@ -56,6 +56,12 @@ export default function ResultsPage() {
           </span>
         </button>
         <div className="flex items-center gap-3">
+          <a
+            href="/institutions"
+            className="text-xs text-neutral-500 dark:text-white/40 hover:text-neutral-800 dark:hover:text-white/80 transition-colors font-medium"
+          >
+            For institutions
+          </a>
           <ThemeToggle />
           <button
             onClick={() => window.open("/print", "_blank")}
