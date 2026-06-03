@@ -27,19 +27,19 @@ const DIMENSIONS = [
     question: "Is the prompt broad and genre-predictable, or constrained and novel?",
     rows: [
       {
-        source: "Paustian & Slinger (2024)",
+        source: "Ding (2025)",
         finding:
-          "Broad, generic assignment types are among those most commonly completed by LLMs, with text-based homework and standard reports showing the highest rates of AI-generated content.",
+          "Fully open-ended projects let an LLM gravitate to the familiar, easily generated instances it handles best; constrained, interconnected, multi-step tasks are markedly more AI-resilient.",
+      },
+      {
+        source: "Akbar (2025)",
+        finding:
+          "Across 50 real assignments, broadly framed conceptual and definitional tasks were highly AI-solvable (>70%), while context-rich, higher-order problems scored lowest.",
       },
       {
         source: "Bernabei et al. (2023)",
         finding:
           "Assignments framed as standard academic genres (compare/contrast, summary, discussion post) were consistently easier for LLMs than constrained or novel tasks.",
-      },
-      {
-        source: "Impey et al. (2024)",
-        finding:
-          "Generic, content-based questions are easier for LLMs than tasks requiring discipline-specific reasoning.",
       },
     ],
   },
@@ -50,19 +50,19 @@ const DIMENSIONS = [
       "Are there mechanisms that make the student's learning process visible — drafts, reflections, oral defenses, iteration?",
     rows: [
       {
-        source: "Policar et al. (2025)",
+        source: "Saltan (2025)",
         finding:
-          "Process artifacts and multi-stage submission structures are key features of LLM-resistant assessment design.",
+          "In a large software-engineering course, short video assignments in which students explain their own work curbed AI-assisted misconduct and increased engagement.",
       },
       {
-        source: "Gooch et al. (2024)",
+        source: "Birks & Clare (2023)",
         finding:
-          "LLM-resistant assignments consistently incorporated process artifacts such as drafts and reflections; assignments lacking these were disproportionately flagged for AI-generated content.",
+          "Viva-style oral defenses of unsupervised work raise both the effort and the perceived risk of AI-facilitated misuse, functioning as a direct deterrent.",
       },
       {
-        source: "Fagbohun et al. (2024)",
+        source: "Ncube et al. (2025)",
         finding:
-          "Oral defenses and tasks requiring local data or tools function as reliable process visibility mechanisms regardless of content difficulty.",
+          "A systematic review concludes that process-based, multi-stage, and oral assessments are central to maintaining integrity in AI-infused learning environments.",
       },
     ],
   },
@@ -78,14 +78,14 @@ const DIMENSIONS = [
           "Text-based deliverables (essays, reports, homework) are the output types most consistently associated with AI-generated plagiarism.",
       },
       {
-        source: "Gooch et al. (2024) / Impey et al. (2024)",
-        finding:
-          "Generic written outputs and content-based question formats were the most susceptible; visual, local, or discipline-specific outputs showed lower risk.",
-      },
-      {
         source: "Shepherd (2025)",
         finding:
           "Unsupervised text deliverables — essays, reports, projects — align directly with current LLM strengths and carry the highest structural exposure; live, oral, and practical formats carry the lowest.",
+      },
+      {
+        source: "Bernabei et al. (2023)",
+        finding:
+          "LLMs produce fluent descriptive prose but markedly weaker original analysis; formats dominated by description are more susceptible than those demanding sustained reasoning.",
       },
     ],
   },
@@ -101,34 +101,37 @@ const DIMENSIONS = [
           "Verification depends on structural features of the assignment, not detection tools alone; assignments with no secondary verification mechanism leave instructors without a reliable basis for judgment.",
       },
       {
-        source: "Bernabei et al. (2023) / Policar et al. (2025)",
+        source: "Weber-Wulff et al. (2023)",
         finding:
-          "Verification burden — the difficulty instructors face in checking whether work reflects genuine learning — is a primary driver of LLM misuse risk, independent of content difficulty.",
+          "A large comparative test of AI-text detectors found them neither consistently accurate nor reliable, and systematically biased toward labeling AI-generated text as human.",
       },
       {
-        source: "Paustian & Slinger (2024) / Pudasaini et al. (2024)",
+        source: "Perkins et al. (2024)",
         finding:
-          "AI-text detectors identify roughly 88% of cases correctly on clean text, but accuracy collapses toward single digits after light paraphrasing and carries high false-positive rates on genuine student writing — so detector-only verification is structurally insufficient.",
+          "Simple paraphrasing and adversarial edits reliably bypass detectors, which also carry high false-positive rates for non-native writers — making detector-only verification structurally insufficient.",
       },
       {
         source: "Lodge et al. (2023)",
         finding:
-          "Assessment design should incorporate \"epistemic transparency\" — mechanisms that make the student's reasoning process observable — as the most durable form of verification.",
+          "The most durable verification comes from assessment design that makes the student's reasoning process observable, since detection alone is increasingly unreliable.",
       },
     ],
   },
 ];
 
 const REFERENCES = [
+  "Akbar, M. S. (2025). Beyond detection: Designing AI-resilient assessments with automated feedback to foster critical thinking. arXiv:2503.23622.",
   "Bernabei, M., Colabianchi, S., Falegnami, A., & Costantino, F. (2023). Students' use of large language models in engineering education. Computers and Education: Artificial Intelligence, 5, 100172.",
-  "Fagbohun, O., Iduwe, N., Abdullahi, M., Ifaturoti, A., & Nwanna, O. (2024). Beyond traditional assessment: Exploring the impact of large language models on grading practices. Journal of Artificial Intelligence, Machine Learning and Data Science.",
-  "Gooch, D., Waugh, K., Richards, M., Slaymaker, M., & Woodthorpe, J. (2024). Exploring the profile of university assessments flagged as containing AI-generated material. ACM Inroads, 15, 39–47.",
-  "Impey, C., Wenger, M., Garuda, N., Golchin, S., & Stamer, S. (2024). Using large language models for automated grading of student writing about science. International Journal of Artificial Intelligence in Education, 35, 1825–1859.",
+  "Birks, D., & Clare, J. (2023). Linking artificial intelligence facilitated academic misconduct to existing prevention frameworks. International Journal for Educational Integrity, 19, 20.",
+  "Ding, K. (2025). Designing AI-resilient assessments using interconnected problems: A theoretically grounded and empirically validated framework. arXiv:2512.10758.",
   "Lodge, J. M., Thompson, K., & Corrin, L. (2023). Mapping the implications of generative artificial intelligence for academic integrity. Australasian Journal of Educational Technology.",
+  "Ncube, P. D. N., Dzvapatsva, G. P., Matobobo, C., & Ranga, M. M. (2025). Redefining student assessment in AI-infused learning environments: A systematic review of challenges and strategies for academic integrity. AI and Ethics.",
   "Paustian, T., & Slinger, B. (2024). Students are using large language models and AI detectors can often detect their use. Frontiers in Education.",
-  "Policar, P., Špendl, M., Curk, T., & Zupan, B. (2025). Automated assignment grading with large language models. Bioinformatics, 41, i21–i29.",
+  "Perkins, M., Roe, J., Vu, B., Postma, D., Hickerson, D., & McGaughran, J. (2024). Simple techniques to bypass GenAI text detectors: Implications for inclusive education. International Journal of Educational Technology in Higher Education, 21.",
   "Pudasaini, S., Miralles-Pechuán, L., Lillis, D., & Salvador, M. (2024). Survey on AI-generated plagiarism detection. Journal of Academic Ethics, 23, 1137–1170.",
-  "Shepherd, C. (2025). Generative AI misuse potential in cyber security education. ArXiv.",
+  "Saltan, A. (2025). Enhancing learning and mitigating AI-assisted misconduct: A case of using video assignments in a high-enrollment software engineering course. Proceedings of the 33rd ACM International Conference on the Foundations of Software Engineering.",
+  "Shepherd, C. (2025). Generative AI misuse potential in cyber security education. arXiv:2501.12883.",
+  "Weber-Wulff, D., Anohina-Naumeca, A., Bjelobaba, S., Foltýnek, T., Guerrero-Dib, J., Popoola, O., Šigut, P., & Waddington, L. (2023). Testing of detection tools for AI-generated text. International Journal for Educational Integrity, 19, 26.",
 ];
 
 export default function EvidencePage() {
